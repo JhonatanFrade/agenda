@@ -68,7 +68,7 @@ class ContasDAO{
 
 		$vet = array();
 
-		$query = 'SELECT *
+		$query = 'SELECT *, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_criacao, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_alteracao
 				 FROM contas';
 
 		$res = $dba->query($query);
@@ -78,8 +78,8 @@ class ContasDAO{
 		for ($i=0; $i < $num; $i++) { 
 			$id = $dba->result($res, $i, 'id');
 			$name = $dba->result($res, $i, 'nome');
-			$date_c = $dba->result($res, $i, 'date_create');
-			$date_u = $dba->result($res, $i, 'date_update');
+			$date_c = $dba->result($res, $i, 'data_criacao');
+			$date_u = $dba->result($res, $i, 'data_alteracao');
 
 			$contas = new Contas();
 
@@ -100,7 +100,7 @@ class ContasDAO{
 
 		$id = $obj->getId();
 
-		$query = 'SELECT *
+		$query = 'SELECT *, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_criacao, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_alteracao
 				 FROM contas
 				 WHERE id = '.$id;
 
@@ -112,7 +112,7 @@ class ContasDAO{
 			$id = $dba->result($res, $i, 'id');
 			$name = $dba->result($res, $i, 'nome');
 			$date_c = $dba->result($res, $i, 'data_criacao');
-			$date_u = $dba->result($res, $i, 'data_modificacao');
+			$date_u = $dba->result($res, $i, 'data_alteracao');
 
 			$contas = new Contas();
 

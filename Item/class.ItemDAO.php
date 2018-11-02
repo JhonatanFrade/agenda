@@ -67,7 +67,7 @@ class ItemDAO{
 
 		$vet = array();
 
-		$query = 'SELECT *
+		$query = 'SELECT *, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_criacao, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_alteracao
 				 FROM item';
 
 		$res = $dba->query($query);
@@ -77,8 +77,8 @@ class ItemDAO{
 		for ($i=0; $i < $num; $i++) { 
 			$id = $dba->result($res, $i, 'id');
 			$descricao = $dba->result($res, $i, 'descricao');
-			$date_c = $dba->result($res, $i, 'date_create');
-			$date_u = $dba->result($res, $i, 'date_update');
+			$date_c = $dba->result($res, $i, 'data_criacao');
+			$date_u = $dba->result($res, $i, 'data_alteracao');
 
 			$item = new Item();
 
@@ -99,7 +99,7 @@ class ItemDAO{
 
 		$id = $obj->getId();
 
-		$query = 'SELECT *
+		$query = 'SELECT *, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_criacao, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_alteracao
 				 FROM item
 				 WHERE id = '.$id;
 
@@ -111,7 +111,7 @@ class ItemDAO{
 			$id = $dba->result($res, $i, 'id');
 			$descricao = $dba->result($res, $i, 'descricao');
 			$date_c = $dba->result($res, $i, 'data_criacao');
-			$date_u = $dba->result($res, $i, 'data_modificacao');
+			$date_u = $dba->result($res, $i, 'data_alteracao');
 
 			$item = new Item();
 

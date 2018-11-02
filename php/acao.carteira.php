@@ -11,8 +11,8 @@
 	switch ($action) {
 		case 'insert':
 			$name = $_POST['name'];
-			$date_c = date("d-m-Y H:i:s");
-			$date_u = date("d-m-Y H:i:s");
+			$date_c = date("Y-m-d H:i:s");
+			$date_u = date("Y-m-d H:i:s");
 
 			$carteira = new Contas();
 
@@ -41,7 +41,7 @@
 		case 'update':
 			$id = $_GET['id'];
 			$name = $_POST['name'];
-			$date_u = date("d-m-Y H:i:s");
+			$date_u = date("Y-m-d H:i:s");
 
 			$carteira = new Contas();
 

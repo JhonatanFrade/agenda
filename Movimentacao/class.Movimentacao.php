@@ -8,7 +8,7 @@
         private $tipo_mov;
         private $data;
         private $descricao;
-         private $valor;
+        private $valor;
 
     	public function  Movimentacao()
     	{

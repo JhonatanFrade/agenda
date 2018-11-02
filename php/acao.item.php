@@ -11,8 +11,8 @@
 	switch ($action) {
 		case 'insert':
 			$descricao = $_POST['descricao'];
-			$date_c = date("d-m-Y H:i:s");
-			$date_u = date("d-m-Y H:i:s");
+			$date_c = date("Y-m-d H:i:s");
+			$date_u = date("Y-m-d H:i:s");
 
 			$item = new Item();
 
@@ -41,7 +41,7 @@
 		case 'update':
 			$id = $_GET['id'];
 			$descricao = $_POST['descricao'];
-			$date_u = date("d-m-Y H:i:s");
+			$date_u = date("Y-m-d H:i:s");
 
 			$item = new Item();
 
