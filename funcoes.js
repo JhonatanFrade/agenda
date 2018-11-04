@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+	$('#dinheiro').mask('#.##0,00', {reverse: true});
+
 	//Quando clicar no botão editar da Conta
 	$('#tableConta button').on("click", function() {
 		//pegar o id do bottao editar

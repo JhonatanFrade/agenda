@@ -4,58 +4,82 @@
 
 	// echo 'Credito';
 
+  require_once("Contas/class.Contas.php");
+  require_once("Contas/class.ContasDAO.php");
+
+  $CarteirasDAO = new ContasDAO();
+
+  require_once("Movimentacao/class.Movimentacao.php");
+  require_once("Movimentacao/class.MovimentacaoDAO.php");
+
+  $MovimentacaoDAO = new MovimentacaoDAO();
+
 ?>
 
 <h1 style="color: white;">Crédito</h1>
 
-<br style="margin-top: 25px;">
+<br>
 
-<div class="dropdown col-md-2">
-	<label for="exampleInputEmail1">Carteira</label>
-	<select class="form-control">
-		<option></option>
-		<option>Carteira 1</option>
-		<option>Carteira 2</option>
-	</select>
-</div>
-
-<form style="margin-top: 30px;">
-  <div class="form-group col-md-6">
-    <label for="exampleInputEmail1">Descrição</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Apenas texto">
-    <small id="emailHelp" class="form-text text-muted">informe a descrição do crédito.</small>
+<form action="php/acao.credito.php?action=insert" method="POST">
+  <div class="dropdown col-md-4">
+  	<label>Carteiras</label>
+  	<select name="id_conta" class="form-control">
+  		<option value="0"></option>
+      <?php 
+          $carteiras = $CarteirasDAO->listar();
+        foreach ($carteiras as $key => $obj) {
+          $id = $obj->getId();
+          $name = $obj->getNome();
+        ?>
+  		<option value="<?php echo $id ?>"><?php echo $name ?></option>
+      <?php } ?>
+  	</select>
+    <small class="form-text text-muted">informe a carteira.</small>
   </div>
-
+  <br>
+  <div class="form-group col-md-6">
+    <label>Descrição</label>
+    <textarea name="descricao" class="form-control" rows="3"></textarea>
+    <small class="form-text text-muted">informe a descrição do crédito.</small>
+  </div>
+  <br>
   <div class="form-group col-md-2">
-    <label for="exampleInputPassword1">Valor</label>
-    <input type="number" class="form-control" id="exampleInputPassword1" placeholder="Valor">
+    <label>Valor</label>
+    <input type="text" id="dinheiro" name="valor" class="form-control" />
+    <small class="form-text text-muted">informe o valor.</small>
   </div>
-
-	<div class="form-group col-md-4">
-	<label >Data</label>
-	<input type="date" name="bday" max="3000-12-31" 
-	    min="1000-01-01" class="form-control">
+  <br>
+	<div class="form-group col-md-3">
+	 <label>Data</label>
+	 <input type="date" name="data" max="3000-12-31" min="1000-01-01" class="form-control">
+   <small class="form-text text-muted">informe a data.</small>
 	</div>
-
+  <br>
   <div class="form-group col-md-6">
-  	<button type="submit" class="btn btn-primary">Adicionar</button>
+    <button type="submit" class="btn btn-primary">Adicionar</button>
   </div>
+  <input type="hidden" name="tipo_mov" value="1" />
 </form>
 
-<br style="margin-top: 35px;">
+<br><br>
 
 <ul class="list-group col-md-6" style="color: black;">
-  <li class="list-group-item disabled">Listagem</li>
+  <li class="list-group-item disabled">Listagem de créditos do mês</li>
+  <?php 
+    $creditos = $MovimentacaoDAO->listar();
+    if(!empty($creditos)){
+      foreach ($creditos as $key => $obj) {
+      $data = $obj->getData();
+      $descricao = $obj->getDescricao();
+  ?>
   <li class="list-group-item">
-  	18/10 - Salário
+  	<?php echo $data . ' - '. $descricao;?>
   </li>
+  <?php } ?>
+<?php }else{ ?>
   <li class="list-group-item">
-  	15/10 - Bonificação
+    não há registro!
   </li>
-  <li class="list-group-item">
-  	14/10 - Investimento
-  </li>
-  <li class="list-group-item">
-  	10/10 - Investimento
-  </li>
+  <?php } ?>
 </ul>
+

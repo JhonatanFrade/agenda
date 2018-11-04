@@ -1,6 +1,6 @@
 <?php
 // Leonardo desenvolveu está classe.
-require_once('class.DbAdmin.php');
+require_once('C:/xampp/htdocs/ULBRA/web2/agenda/DbAdmin/class.DbAdmin.php');
 
 class MovimentacaoDAO{
 
@@ -10,28 +10,31 @@ class MovimentacaoDAO{
 
 		$dba = new DbAdmin('mysql');
 
-		$dba->connect('localhost','root','','web2');
+		$dba->connect('localhost','root','','oc_agenda_web_2');
 
 		$this->dba = $dba;
 
 	}
 
-	public function cadastra($objeto){
+	public function cadastrar($objeto){
 
 		$dba = $this->dba;
 
-		$id = $objeto->getId();
-		$id_centro_custos = $objeto->getId_centro_custos();
-		$id_conta = $objeto->getId_conta();
 		$tipo_mov = $objeto->getTipo_mov();
+		if($tipo_mov == 2){
+			$id_centro_custos = $objeto->getId_centro_custos();
+		}else{
+			$id_centro_custos = 14;
+		}
+		$id = $objeto->getId();
+		$id_conta = $objeto->getId_conta();
 		$data = $objeto->getData();
 		$descricao = $objeto->getDescricao();
 		$valor = $objeto->getValor();
 
 		$query = 'INSERT INTO movimentacao
-					(tipo_mov,data,descricao,valor)
-				  VALUES ("'.$tipo_mov.'","'.$data.'","'.$descricao.'","'.$valor.'")';
-				  // A id não será armazenada primária e secundaria não serão armazenadas.
+					(id_centro_custos, id_conta, tipo_mov, data, descricao, valor)
+				  VALUES ("'.$id_centro_custos.'", "'.$id_conta.'", "'.$tipo_mov.'","'.$data.'","'.$descricao.'","'.$valor.'")';
 		
 		$dba->query($query);
 		
@@ -52,7 +55,7 @@ class MovimentacaoDAO{
 
 	}
 
-	public function atualiza($objeto){
+	public function atualizar($objeto){
 
 		$dba = $this->dba;
 
@@ -73,6 +76,45 @@ class MovimentacaoDAO{
 				  WHERE id  = "'.$id_objt.'"';
 		
 		$dba->query($query);
+	}
+
+	public function listar(){
+		$dba = $this->dba;
+
+		$vet = array();
+
+		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
+				FROM movimentacao
+				WHERE tipo_mov = "1"';
+
+		$res = $dba->query($query);
+
+		$num = $dba->rows($res);
+
+		for ($i=0; $i < $num; $i++) { 
+			$id = $dba->result($res, $i, 'id');
+			$id_centro_custos = $dba->result($res, $i, 'id_centro_custos');
+			$id_conta = $dba->result($res, $i, 'id_conta');
+			$tipo_mov = $dba->result($res, $i, 'tipo_mov');
+			$data = $dba->result($res, $i, 'data_d');
+			$descricao = $dba->result($res, $i, 'descricao');
+			$valor = $dba->result($res, $i, 'valor');
+
+			$Movimentacao = new Movimentacao();
+
+			$Movimentacao->setId($id);
+			$Movimentacao->setId_centro_custos($id_centro_custos);
+			$Movimentacao->setId_conta($id_conta);
+			$Movimentacao->setTipo_mov($tipo_mov);
+			$Movimentacao->setData($data);
+			$Movimentacao->setDescricao($descricao);
+			$Movimentacao->setValor($valor);
+
+			$vet[] = $Movimentacao;
+
+		}
+
+		return $vet;
 	}
 
 }
