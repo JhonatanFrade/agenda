@@ -105,7 +105,16 @@
     </thead>
     <tbody>
       <?php 
-        $creditos = $MovimentacaoDAO->listarCreditos();
+        //************************ACIONA O MÉTODO LISTAR********************************************
+        //$creditos = $MovimentacaoDAO->listarCreditos(); 
+	/* Não precisa mais  chamar um método especifico para um tipo de movimentação, agora com um método
+	somente poderá filtrar na hora de apresentar o contéudo para o usuário.
+	*/
+
+        $tipoDeListagem = 1;
+
+        $creditos = $MovimentacaoDAO->listar($tipoDeListagem);
+        //******************************************************************************************
         if(!empty($creditos)){
           foreach ($creditos as $key => $obj) {
           $data = $obj->getData();
