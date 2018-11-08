@@ -97,8 +97,13 @@
 
 <!-- **************************************CONTROLE DA LISTAGEM POR NOME DAS CONTAS******* -->
 <!--
-  COMO FAZER:
-  Quando acessada a página o dropdown começa vazio portanto na tabela não é listado nada porém quando o usuário seleciona uma carteira a tabala é atualizada com os registros correspondentes  aquela conta, a listagem também é apresentada quando o usuário inseri o formulário na base de dados, por exemplo é nserido um formulário no qual o campo o nome da carteira é selecionado como x, quando armazenado e executado o redirecionamento para a página é enviado a esta pagina(arquivo exe.___.php) o nome x e colocado dentro de uma condição para listar somente os registros correspondentes a este nome. -->
+  A LÓGICA DEVE FUNCIONAR PARECIDO COM ISSO :
+Quando acessada a página o dropdown começa vazio portanto na tabela não é listado nada porém 
+quando o usuário seleciona uma carteira a tabala é atualizada com os registros correspondentes 
+aquela conta, a listagem também é apresentada quando o usuário inseri o formulário na base de
+dados, por exemplo é nserido um formulário no qual o campo o nome da carteira é selecionado como x,
+quando armazenado e executado o redirecionamento para a página é enviado a esta pagina(arquivo exe.___.php)
+o nome x e colocado dentro de uma condição para listar somente os registros correspondentes a este nome. -->
 <div class="dropdown col-md-4">
   <label>Carteiras</label>
   <select name="id_conta" class="form-control">
