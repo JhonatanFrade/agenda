@@ -81,7 +81,7 @@
 
 <div class="dropdown col-md-4">
   <label>Carteiras</label>
-  <select name="id_conta" class="form-control">
+  <select name="id_conta" class="form-control selectContaListagem">
     <?php 
         $carteiras = $CarteirasDAO->listar();
       foreach ($carteiras as $key => $obj) {
@@ -93,7 +93,7 @@
   </select>
 </div>
 <br>
-<div class="form-group col-md-8">
+<div class="form-group col-md-10">
   <label>Listagem de créditos</label>
   <table class="table table-striped">
     <thead>

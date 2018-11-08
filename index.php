@@ -137,7 +137,7 @@
     <script src="node_modules/popper.js/dist/popper.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="funcoes.js"></script>
-	<script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+	<script src="jQuery-Mask-Plugin/jquery.mask.js"></script>
 
 	<!-- Optional JavaScript via CDN -->
 	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

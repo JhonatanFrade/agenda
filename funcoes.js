@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+	$(".selectContaListagem").on('change', function() {
+	  var value = $(this).val();
+	  alert(value);
+	});
+
 	$('#dinheiro').mask('#.##0,00', {reverse: true});
 
 	//Quando clicar no botão editar da Conta
