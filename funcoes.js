@@ -14,16 +14,7 @@ $(document).ready(function () {
 		$('#walletModal').find('.modal-body input').val(valor);
 	});
 
-	//Quando clicar no x do modal
-	$('#walletModal .close').on("click", function() {
-		//limpar o input do modal
-		$('#walletModal').find('.modal-body input').val('');
-		//mudar o action do form
-		$( '#formWallet' )[0].attributes[1].value = 'php/acao.carteira.php?action=insert';
-	});
-
-	//Quando clicar no botão fechar
-	$('#btnClose').on("click", function() {
+	$('#btn-add-1').on("click", function() {
 		//limpar o input do modal
 		$('#walletModal').find('.modal-body input').val('');
 		//mudar o action do form
@@ -47,16 +38,7 @@ $(document).ready(function () {
 		$('#centerCustosModal').find('.modal-body input').val(valor);
 	});
 
-	//Quando clicar no x do modal
-	$('#centerCustosModal .close').on("click", function() {
-		//limpar o input do modal
-		$('#centerCustosModal').find('.modal-body input').val('');
-		//mudar o action do form
-		$( '#formCenterCustos' )[0].attributes[1].value = 'php/acao.centro_custos.php?action=insert';
-	});
-
-	//Quando clicar no botão fechar
-	$('#btnClose').on("click", function() {
+	$('#btn-add-2').on("click", function() {
 		//limpar o input do modal
 		$('#centerCustosModal').find('.modal-body input').val('');
 		//mudar o action do form
@@ -78,16 +60,7 @@ $(document).ready(function () {
 		$('#itemModal').find('.modal-body input').val(valor);
 	});
 
-	//Quando clicar no x do modal
-	$('#itemModal .close').on("click", function() {
-		//limpar o input do modal
-		$('#itemModal').find('.modal-body input').val('');
-		//mudar o action do form
-		$( '#formItem' )[0].attributes[1].value = 'php/acao.item.php?action=insert';
-	});
-
-	//Quando clicar no botão fechar
-	$('#btnClose').on("click", function() {
+	$('#btn-add-3').on("click", function() {
 		//limpar o input do modal
 		$('#itemModal').find('.modal-body input').val('');
 		//mudar o action do form

@@ -2,8 +2,6 @@
 
   //Responsável: Jhonatan Frade
 
-	// echo 'Credito';
-
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
 
@@ -13,6 +11,11 @@
   require_once("Movimentacao/class.MovimentacaoDAO.php");
 
   $MovimentacaoDAO = new MovimentacaoDAO();
+
+  require_once("CentroDeCustos/class.CentroDeCustos.php");
+  require_once("CentroDeCustos/class.CentroDeCustosDAO.php");
+
+  $CentroDeCustosDAO = new CentroDeCustosDAO();
 
 ?>
 
@@ -24,7 +27,6 @@
   <div class="dropdown col-md-4">
   	<label>Carteiras</label>
   	<select name="id_conta" class="form-control">
-  		<option value="0"></option>
       <?php 
           $carteiras = $CarteirasDAO->listar();
         foreach ($carteiras as $key => $obj) {
@@ -37,6 +39,20 @@
     <small class="form-text text-muted">informe a carteira.</small>
   </div>
   <br>
+  <div class="dropdown col-md-4">
+    <label>Centro de custos</label>
+    <select name="id_centro_custos" class="form-control">
+      <?php 
+          $centro_de_custos = $CentroDeCustosDAO->listar();
+        foreach ($centro_de_custos as $key => $obj) {
+          $id = $obj->getId();
+          $name = $obj->getNome();
+        ?>
+      <option value="<?php echo $id ?>"><?php echo $name ?></option>
+      <?php } ?>
+    </select>
+    <small class="form-text text-muted">informe a carteira.</small>
+  </div>
   <div class="form-group col-md-6">
     <label>Descrição</label>
     <textarea name="descricao" class="form-control" rows="3"></textarea>
@@ -61,25 +77,59 @@
   <input type="hidden" name="tipo_mov" value="1" />
 </form>
 
-<br><br>
+<br><br><br><br>
 
-<ul class="list-group col-md-6" style="color: black;">
-  <li class="list-group-item disabled">Listagem de créditos do mês</li>
-  <?php 
-    $creditos = $MovimentacaoDAO->listar();
-    if(!empty($creditos)){
-      foreach ($creditos as $key => $obj) {
-      $data = $obj->getData();
-      $descricao = $obj->getDescricao();
-  ?>
-  <li class="list-group-item">
-  	<?php echo $data . ' - '. $descricao;?>
-  </li>
-  <?php } ?>
-<?php }else{ ?>
-  <li class="list-group-item">
-    não há registro!
-  </li>
-  <?php } ?>
-</ul>
+<div class="dropdown col-md-4">
+  <label>Carteiras</label>
+  <select name="id_conta" class="form-control">
+    <?php 
+        $carteiras = $CarteirasDAO->listar();
+      foreach ($carteiras as $key => $obj) {
+        $id = $obj->getId();
+        $name = $obj->getNome();
+      ?>
+    <option value="<?php echo $id ?>"><?php echo $name ?></option>
+    <?php } ?>
+  </select>
+</div>
+<br>
+<div class="form-group col-md-8">
+  <label>Listagem de créditos</label>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Data</th>
+        <th scope="col">Centro de Custo</th>
+        <th scope="col">Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php 
+        $creditos = $MovimentacaoDAO->listarCreditos();
+        if(!empty($creditos)){
+          foreach ($creditos as $key => $obj) {
+          $data = $obj->getData();
+
+          $id_centro_custos = $obj->getId_centro_custos();
+          $centro_custos = new CentroDeCustos();
+          $centro_custos->setId($id_centro_custos);
+          $centro_de_custos = $CentroDeCustosDAO->listarUmCentroDeCusto($centro_custos);
+          foreach ($centro_de_custos as $k => $objeto) {
+            $descricao_centro_custos = $objeto->getNome();
+          }
+
+          $valor = $obj->getValor();
+      ?>
+      <tr>
+        <td><?php echo $data;?></td>
+        <td><?php echo $descricao_centro_custos;?></td>
+        <td><?php echo $valor;?></td>
+      </tr>
+      <?php } ?>
+      <?php }else{ ?>
+         <td><?php echo 'Sem registro!';?></td>
+        <?php } ?>
+    </tbody>
+  </table>
+</div>
 

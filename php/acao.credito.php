@@ -7,14 +7,12 @@
 	
 	$action = $_REQUEST['action'];
 
-	var_dump($_POST);
-	echo $action;
-	// exit;
 
 	switch ($action) {
 		case 'insert':
 			$id_conta = $_POST['id_conta'];
 			$tipo_mov = $_POST['tipo_mov'];
+			$id_centro_custos = $_POST['id_centro_custos'];
 			$data = $_POST['data'];
 			$descricao = $_POST['descricao'];
 			$valor = $_POST['valor'];
@@ -23,6 +21,7 @@
 
 			$credito->setId_conta($id_conta);
 			$credito->setTipo_mov($tipo_mov);
+			$credito->setId_centro_custos($id_centro_custos);
 			$credito->setData($data);
 			$credito->setDescricao($descricao);
 			$credito->setValor($valor);

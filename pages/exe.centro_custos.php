@@ -13,7 +13,7 @@
 
 <div class="float-md-right" style="margin-right: 25px;">
 	<label>NOVO</label>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centerCustosModal"><i class="fa fa-plus-circle"></i></button>
+	<button type="button" id="btn-add-2" class="btn btn-primary" data-toggle="modal" data-target="#centerCustosModal"><i class="fa fa-plus-circle"></i></button>
 </div>
 <br><br><br>
  

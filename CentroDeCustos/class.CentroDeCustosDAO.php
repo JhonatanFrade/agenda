@@ -111,8 +111,8 @@ class CentroDeCustosDAO{
 		for ($i=0; $i < $num; $i++) { 
 			$id = $dba->result($res, $i, 'id');
 			$name = $dba->result($res, $i, 'nome');
-			$date_c = $dba->result($res, $i, 'data_criacao');
-			$date_u = $dba->result($res, $i, 'data_modificacao');
+			$date_c = $dba->result($res, $i, 'date_create');
+			$date_u = $dba->result($res, $i, 'date_update');
 
 			$centro_custos = new CentroDeCustos();
 

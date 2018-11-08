@@ -21,11 +21,7 @@ class MovimentacaoDAO{
 		$dba = $this->dba;
 
 		$tipo_mov = $objeto->getTipo_mov();
-		if($tipo_mov == 2){
-			$id_centro_custos = $objeto->getId_centro_custos();
-		}else{
-			$id_centro_custos = 14;
-		}
+		$id_centro_custos = $objeto->getId_centro_custos();
 		$id = $objeto->getId();
 		$id_conta = $objeto->getId_conta();
 		$data = $objeto->getData();
@@ -79,6 +75,44 @@ class MovimentacaoDAO{
 	}
 
 	public function listar(){
+		$dba = $this->dba;
+
+		$vet = array();
+
+		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
+				FROM movimentacao';
+
+		$res = $dba->query($query);
+
+		$num = $dba->rows($res);
+
+		for ($i=0; $i < $num; $i++) { 
+			$id = $dba->result($res, $i, 'id');
+			$id_centro_custos = $dba->result($res, $i, 'id_centro_custos');
+			$id_conta = $dba->result($res, $i, 'id_conta');
+			$tipo_mov = $dba->result($res, $i, 'tipo_mov');
+			$data = $dba->result($res, $i, 'data_d');
+			$descricao = $dba->result($res, $i, 'descricao');
+			$valor = $dba->result($res, $i, 'valor');
+
+			$Movimentacao = new Movimentacao();
+
+			$Movimentacao->setId($id);
+			$Movimentacao->setId_centro_custos($id_centro_custos);
+			$Movimentacao->setId_conta($id_conta);
+			$Movimentacao->setTipo_mov($tipo_mov);
+			$Movimentacao->setData($data);
+			$Movimentacao->setDescricao($descricao);
+			$Movimentacao->setValor($valor);
+
+			$vet[] = $Movimentacao;
+
+		}
+
+		return $vet;
+	}
+
+	public function listarCreditos(){
 		$dba = $this->dba;
 
 		$vet = array();

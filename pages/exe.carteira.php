@@ -13,7 +13,7 @@
 
 <div class="float-md-right" style="margin-right: 25px;">
 	<label>NOVO</label>
-	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#walletModal"><i class="fa fa-plus-circle"></i></button>
+	<button type="button" id="btn-add-1" class="btn btn-primary" data-toggle="modal" data-target="#walletModal"><i class="fa fa-plus-circle"></i></button>
 </div>
 <br><br><br>
  
@@ -43,7 +43,7 @@
 </div>
 
 <div id="tableConta" class="form-group col-md-12">
-	<table class="table table-striped" >
+	<table class="table table-striped">
 	  <thead>
 	    <tr>
 	      <th scope="col">Nome</th>
