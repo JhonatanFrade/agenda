@@ -36,7 +36,6 @@ class MovimentacaoDAO{
 		
 	}
 
-
 	public function excluir($objeto){
 
 		$dba = $this->dba;
@@ -74,13 +73,26 @@ class MovimentacaoDAO{
 		$dba->query($query);
 	}
 
-	public function listar(){
+	/* 
+		Para identificar e listar as tabelas que condizem com a forma de movimentação, 
+		é filtrado apartir do campo tipo_mov:
+		1 - para Crédito
+		2 - para Débito
+	*/
+	public function listar($tipoDeListagem)
+	{
 		$dba = $this->dba;
 
 		$vet = array();
 
+		/*
 		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
 				FROM movimentacao';
+		*/
+
+		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
+				FROM movimentacao
+				WHERE tipo_mov = "'.$tipoDeListagem.'"'; 
 
 		$res = $dba->query($query);
 
@@ -112,6 +124,9 @@ class MovimentacaoDAO{
 		return $vet;
 	}
 
+	/*
+	//***********Uma método para cada tipo de movimentação não é mais necessário*************
+	
 	public function listarCreditos(){
 		$dba = $this->dba;
 
@@ -150,7 +165,7 @@ class MovimentacaoDAO{
 
 		return $vet;
 	}
-
+	*/
 }
 
 ?>
