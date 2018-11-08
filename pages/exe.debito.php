@@ -50,7 +50,7 @@
   </div>
 <!-- ******************************************************************************************************* -->
   <br>
-<!-- **************************************dropdown Nome dos Centors de custos****************************** -->
+<!-- **************************************dropdown Nome dos Centros de custos****************************** -->
   <div class="dropdown col-md-4">
     <label>Centro de custos</label>
     <select name="id_centro_custos" class="form-control">
@@ -118,8 +118,9 @@
 
 
 <!-- **********************************************LISTAGEM DOS DÉBITOS************************************ -->
-
-<div class="form-group col-md-12"> <!--Tamanho da tabela modificado de 8 para 12  -->
+<!-- Modificado/Antes eu tinha colocado o col-md com 12 para ter espaço para colocar os botões
+Como por enquanto não estamos usando os botões deixei a tabela com o tamanho que estava antes.   -->
+<div class="form-group col-md-8"> 
   <label>Listagem de débitos</label>
   <table class="table table-striped">
     <thead>
@@ -142,7 +143,7 @@
         if(!empty($debitos)){
           foreach ($debitos as $key => $obj) {
           $data = $obj->getData();
-          $descricao_debito = $obj->getDescricao(); // Recebe a descrição do tipo de movimentação
+          //$descricao_debito = $obj->getDescricao(); // Recebe a descrição do tipo de movimentação/TIREI
           //*******************APRESENTAR CENTRO DE CUSTO NA TABELA******************************
           $id_centro_custos = $obj->getId_centro_custos();
           $centro_custos = new CentroDeCustos(); // 
@@ -157,17 +158,17 @@
       ?>
       <tr>
         <td><?php echo $data;?></td>
-        <td><?php echo $descricao_debito?></td> <!-- Descrição do tipo de movimentação  -->
+        <!--<td><?//php echo $descricao_debito?></td> --> <!-- Descrição do tipo de movimentação/Tirei  -->
         <td><?php echo $descricao_centro_custos;?></td>
         <td><?php echo $valor;?></td>
-        <!-- ********************************BOTÕES DE EDITAR E EXCLUIR****************************************** -->
+        <!-- ********************************BOTÕES DE EDITAR E EXCLUIR/INCOMPLETO****************************************** -->
         <!--
         <td>
-          <button type="button" id="<?php //echo $id; ?>" data-toggle="modal" data-target="#centerCustosModal">
-            <input type="hidden" value="<?php //echo $name; ?>">
+          <button type="button" id="<//?php //echo $id; ?>" data-toggle="modal" data-target="#centerCustosModal">
+            <input type="hidden" value="<//?php //echo $name; ?>">
             <i class="fa fa-pencil-alt"></i>
           </button>
-          <button style="margin-left: 20px;" onclick="location.href='php/acao.debito.php?action=delete&id=<?php //echo $id; ?>'">
+          <button style="margin-left: 20px;" onclick="location.href='php/acao.debito.php?action=delete&id=<//?php //echo $id; ?>'">
             <i class="fa fa-trash"></i>
           </button>
         </td>
