@@ -3,6 +3,9 @@
 	require_once("../Movimentacao/class.Movimentacao.php");
 	require_once("../Movimentacao/class.MovimentacaoDAO.php");
 
+	require_once("../Contas/class.Contas.php");
+	require_once("../Contas/class.ContasDAO.php");
+
 	$dao = new MovimentacaoDAO();
 	
 	$action = $_REQUEST['action'];
@@ -41,12 +44,11 @@
 
 			$dao->excluir($carteira);
 
-			header("location:../index.php?pag=carteira&msg=2");
+			header("location:../index.php?pag=credito&msg=2");
 			exit();
 
 		case 'update':
 			$id = $_GET['id'];
-			$name = $_POST['name'];
 			$date_u = date("Y-m-d H:i:s");
 
 			$carteira = new Contas();

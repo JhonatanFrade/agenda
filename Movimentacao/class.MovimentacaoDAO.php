@@ -54,7 +54,7 @@ class MovimentacaoDAO{
 
 		$dba = $this->dba;
 
-		$id_objt = $$objeto->getId();
+		$id_objt = $objeto->getId();
 		$id_centro_custos = $objeto->getId_centro_custos();
 		$id_conta = $objeto->getId_conta();
 		$tipo_mov = $objeto->getTipo_mov();
@@ -62,8 +62,9 @@ class MovimentacaoDAO{
 		$descricao = $objeto->getDescricao();
 		$valor = $objeto->getValor();
 
-		$query = 'UPDATE FROM movimentacao   
-				  SET	nome ="'.$nome.'",
+		$query = 'UPDATE movimentacao   
+				  SET id_centro_custos ="'.$id_centro_custos.'",
+				  id_conta ="'.$id_conta.'",
 				  tipo_mov ="'.$tipo_mov.'",
 				  data ="'.$data.'",
 				  descricao ="'.$descricao.'",
@@ -84,11 +85,6 @@ class MovimentacaoDAO{
 		$dba = $this->dba;
 
 		$vet = array();
-
-		/*
-		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
-				FROM movimentacao';
-		*/
 
 		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
 				FROM movimentacao
@@ -124,17 +120,16 @@ class MovimentacaoDAO{
 		return $vet;
 	}
 
-	/*
-	//***********Uma método para cada tipo de movimentação não é mais necessário*************
-	
-	public function listarCreditos(){
+	public function listarUmaMovimentacao($obj)
+	{
 		$dba = $this->dba;
 
 		$vet = array();
 
-		$query = 'SELECT *, DATE_FORMAT(data, "%d/%m") AS data_d
+		$query = 'SELECT *
 				FROM movimentacao
-				WHERE tipo_mov = "1"';
+				WHERE tipo_mov = "'.$obj->getTipo_mov().'" 
+				and id = "'.$obj->getId().'"'; 
 
 		$res = $dba->query($query);
 
@@ -145,7 +140,7 @@ class MovimentacaoDAO{
 			$id_centro_custos = $dba->result($res, $i, 'id_centro_custos');
 			$id_conta = $dba->result($res, $i, 'id_conta');
 			$tipo_mov = $dba->result($res, $i, 'tipo_mov');
-			$data = $dba->result($res, $i, 'data_d');
+			$data = $dba->result($res, $i, 'data');
 			$descricao = $dba->result($res, $i, 'descricao');
 			$valor = $dba->result($res, $i, 'valor');
 
@@ -165,7 +160,6 @@ class MovimentacaoDAO{
 
 		return $vet;
 	}
-	*/
 }
 
 ?>

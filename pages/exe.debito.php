@@ -36,7 +36,6 @@
   <div class="dropdown col-md-4">
     <label>Carteiras</label>
     <select name="id_conta" class="form-control">
-      <option value="0"></option> <!-- Começa com o preenchimento do dropdown vazio -->
       <?php 
           $carteiras = $CarteirasDAO->listar();
         foreach ($carteiras as $key => $obj) {
@@ -54,7 +53,6 @@
   <div class="dropdown col-md-4">
     <label>Centro de custos</label>
     <select name="id_centro_custos" class="form-control">
-      <option value="0"></option> <!-- Começa com o preenchimento do dropdown vazio -->
       <?php 
           $centro_de_custos = $CentroDeCustosDAO->listar();
         foreach ($centro_de_custos as $key => $obj) {
@@ -107,7 +105,6 @@ o nome x e colocado dentro de uma condição para listar somente os registros co
 <div class="dropdown col-md-4">
   <label>Carteiras</label>
   <select name="id_conta" class="form-control">
-    <option value="0"></option> <!-- Começa com o preenchimento do dropdown vazio -->
     <?php 
         $carteiras = $CarteirasDAO->listar();
       foreach ($carteiras as $key => $obj) {
@@ -125,16 +122,15 @@ o nome x e colocado dentro de uma condição para listar somente os registros co
 <!-- **********************************************LISTAGEM DOS DÉBITOS************************************ -->
 <!-- Modificado/Antes eu tinha colocado o col-md com 12 para ter espaço para colocar os botões
 Como por enquanto não estamos usando os botões deixei a tabela com o tamanho que estava antes.   -->
-<div class="form-group col-md-8"> 
+<div class="form-group col-md-10"> 
   <label>Listagem de débitos</label>
   <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">Data</th>
-        <th scope="col">Descrição</th>
         <th scope="col">Centro de Custo</th>
         <th scope="col">Valor</th>
-        <!--<th scope="col" colspan="2">Ações</th>--> <!-- COLUNA DOS BOTÕES DE EDITAR E EXCLUIR  -->
+        <th scope="col" colspan="2">Ações</th> <!-- COLUNA DOS BOTÕES DE EDITAR E EXCLUIR  -->
       </tr>
     </thead>
     <tbody>
@@ -160,24 +156,23 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
           }
           //************************************************************************************
           $valor = $obj->getValor();
+          $id_debito = $obj->getId();
       ?>
       <tr>
         <td><?php echo $data;?></td>
-        <!--<td><?//php echo $descricao_debito?></td> --> <!-- Descrição do tipo de movimentação/Tirei  -->
         <td><?php echo $descricao_centro_custos;?></td>
-        <td><?php echo $valor;?></td>
+        <td><?php echo 'R$' . number_format($valor, 2, ',', '.');?></td>
         <!-- ********************************BOTÕES DE EDITAR E EXCLUIR/INCOMPLETO****************************************** -->
-        <!--
+        
         <td>
-          <button type="button" id="<//?php //echo $id; ?>" data-toggle="modal" data-target="#centerCustosModal">
-            <input type="hidden" value="<//?php //echo $name; ?>">
+          <a href="index.php?pag=debito.edit&id=<?php echo $id_debito; ?>">
             <i class="fa fa-pencil-alt"></i>
-          </button>
-          <button style="margin-left: 20px;" onclick="location.href='php/acao.debito.php?action=delete&id=<//?php //echo $id; ?>'">
+          </a>
+          <a href="php/acao.debito.php?action=delete&id=<?php echo $id_debito; ?>">
             <i class="fa fa-trash"></i>
-          </button>
+          </a>
         </td>
-        -->
+        
         <!--****************************************************************************************************  -->
       </tr>
       <?php } ?>

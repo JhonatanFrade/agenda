@@ -1,6 +1,7 @@
 <?php 
 
 $arq = 'log.txt';
+
 $msg = '';
 
 $msg .= "Adeus Bressan!";
