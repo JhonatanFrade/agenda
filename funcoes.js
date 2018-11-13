@@ -1,8 +1,24 @@
 $(document).ready(function () {
 
 	$(".selectContaListagem").on('change', function() {
-	  var value = $(this).val();
-	  alert(value);
+		var value = $(this).val();
+		console.log(value);
+
+		$.ajax({
+			url: "http://localhost/ULBRA/web2/agenda/php/acao.credito.php",
+			type: "POST",
+			data: "action=insert&id_conta="+value+"&tipo_mov=1",
+			dataType: "html",
+			success: function(data){
+				console.log(data);
+			}
+		}).fail(function(jqXHR, textStatus ) {
+		    console.log("Request failed: " + textStatus);
+
+		}).always(function() {
+		    console.log("completou");
+		});
+
 	});
 
 	$('#dinheiro').mask('#.##0,00', {reverse: true});

@@ -6,6 +6,8 @@
 	require_once("../Contas/class.Contas.php");
 	require_once("../Contas/class.ContasDAO.php");
 
+	require_once('../ControllerArquivo/class.Arquivo.php');
+
 	$dao = new MovimentacaoDAO();
 	
 	$action = $_REQUEST['action'];
@@ -22,10 +24,10 @@
 			$tipo_mov = $_POST['tipo_mov']; //  1 - Crédito , 2 - Débito / O campo ná tabela tá como int
 			$data = $_POST['data'];
 			$descricao = $_POST['descricao'];
-			$valor = $_POST['valor'];
+			$valorOld = $_POST['valor'];
 
-			$valor = str_replace('.','', $valor);
-			$valor = str_replace(',','.', $valor);
+			$valorNew = str_replace('.','', $valorOld);
+			$valorNew = str_replace(',','.', $valorNew);
 
 			$debito = new Movimentacao();
 
@@ -34,9 +36,17 @@
 			$debito->setTipo_mov($tipo_mov);
 			$debito->setData($data);
 			$debito->setDescricao($descricao);
-			$debito->setValor($valor);
+			$debito->setValor($valorNew);
 
 			$dao->cadastrar($debito);
+
+			$arquivo = new Arquivo();
+
+			$arquivo->abrirArquivo("a+");
+			
+			$arquivo->escreverNoArquivo(' -> '.date("d/m/Y H:i:s").' - debito - '.$valorOld);
+
+			$arquivo->fecharArquivo();
 
 			header("location:../index.php?pag=debito&msg=1");
 			exit();

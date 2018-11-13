@@ -101,20 +101,15 @@
         <th scope="col">Data</th>
         <th scope="col">Centro de Custo</th>
         <th scope="col">Valor</th>
+        <th scope="col">Ações</th>
       </tr>
     </thead>
     <tbody>
       <?php 
-        //************************ACIONA O MÉTODO LISTAR********************************************
-        //$creditos = $MovimentacaoDAO->listarCreditos(); 
-	/* Não precisa mais  chamar um método especifico para um tipo de movimentação, agora com um método
-	somente poderá filtrar na hora de apresentar o contéudo para o usuário.
-	*/
 
         $tipoDeListagem = 1;
 
         $creditos = $MovimentacaoDAO->listar($tipoDeListagem);
-        //******************************************************************************************
         if(!empty($creditos)){
           foreach ($creditos as $key => $obj) {
           $data = $obj->getData();
@@ -128,11 +123,20 @@
           }
 
           $valor = $obj->getValor();
+          $id_credito = $obj->getId();
       ?>
       <tr>
         <td><?php echo $data;?></td>
         <td><?php echo $descricao_centro_custos;?></td>
         <td><?php echo 'R$' . number_format($valor, 2, ',', '.');?></td>
+        <td>
+          <a href="index.php?pag=credito.edit&id=<?php echo $id_credito; ?>">
+            <i class="fa fa-pencil-alt"></i>
+          </a>
+          <a href="php/acao.credito.php?action=delete&id=<?php echo $id_credito; ?>">
+            <i class="fa fa-trash"></i>
+          </a>
+        </td>
       </tr>
       <?php } ?>
       <?php }else{ ?>

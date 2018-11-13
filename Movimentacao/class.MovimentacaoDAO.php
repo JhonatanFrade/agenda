@@ -120,6 +120,47 @@ class MovimentacaoDAO{
 		return $vet;
 	}
 
+	public function listarDeUmaCarteira($obj)
+	{
+		$dba = $this->dba;
+
+		$vet = array();
+
+		$query = 'SELECT *
+				FROM movimentacao
+				WHERE tipo_mov = "'.$obj->getTipo_mov().'" 
+				and id_conta = "'.$obj->getId_conta().'"'; 
+
+		$res = $dba->query($query);
+
+		$num = $dba->rows($res);
+
+		for ($i=0; $i < $num; $i++) { 
+			$id = $dba->result($res, $i, 'id');
+			$id_centro_custos = $dba->result($res, $i, 'id_centro_custos');
+			$id_conta = $dba->result($res, $i, 'id_conta');
+			$tipo_mov = $dba->result($res, $i, 'tipo_mov');
+			$data = $dba->result($res, $i, 'data_d');
+			$descricao = $dba->result($res, $i, 'descricao');
+			$valor = $dba->result($res, $i, 'valor');
+
+			$Movimentacao = new Movimentacao();
+
+			$Movimentacao->setId($id);
+			$Movimentacao->setId_centro_custos($id_centro_custos);
+			$Movimentacao->setId_conta($id_conta);
+			$Movimentacao->setTipo_mov($tipo_mov);
+			$Movimentacao->setData($data);
+			$Movimentacao->setDescricao($descricao);
+			$Movimentacao->setValor($valor);
+
+			$vet[] = $Movimentacao;
+
+		}
+
+		return $vet;
+	}
+
 	public function listarUmaMovimentacao($obj)
 	{
 		$dba = $this->dba;

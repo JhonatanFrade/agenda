@@ -10,7 +10,7 @@ $msg .= '['.date("d/m/Y H:i:s").']';
 
 $msg .= PHP_EOL;
 
-$fo = fopen ($arq, 'a');
+$fo = fopen ($arq, 'a+');
 
 fwrite($fo, $msg);
 

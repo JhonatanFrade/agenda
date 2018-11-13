@@ -6,6 +6,8 @@
 	require_once("../Contas/class.Contas.php");
 	require_once("../Contas/class.ContasDAO.php");
 
+	require_once('../ControllerArquivo/class.Arquivo.php');
+
 	$dao = new MovimentacaoDAO();
 	
 	$action = $_REQUEST['action'];
@@ -18,7 +20,10 @@
 			$id_centro_custos = $_POST['id_centro_custos'];
 			$data = $_POST['data'];
 			$descricao = $_POST['descricao'];
-			$valor = $_POST['valor'];
+			$valorOld = $_POST['valor'];
+
+			$valorNew = str_replace('.','', $valorOld);
+			$valorNew = str_replace(',','.', $valorNew);
 
 			$credito = new Movimentacao();
 
@@ -27,9 +32,17 @@
 			$credito->setId_centro_custos($id_centro_custos);
 			$credito->setData($data);
 			$credito->setDescricao($descricao);
-			$credito->setValor($valor);
+			$credito->setValor($valorNew);
 
 			$dao->cadastrar($credito);
+
+			$arquivo = new Arquivo();
+
+			$arquivo->abrirArquivo("a+");
+			
+			$arquivo->escreverNoArquivo(' -> '.date("d/m/Y H:i:s").' - crédito - '.$valorOld);
+
+			$arquivo->fecharArquivo();
 
 			header("location:../index.php?pag=credito&msg=1");
 			exit();
@@ -38,30 +51,61 @@
 		case 'delete':
 			$id = $_REQUEST['id'];
 
-			$carteira = new Contas();
+			$credito = new Movimentacao();
 
-			$carteira->setId($id);
+			$credito->setId($id);
 
-			$dao->excluir($carteira);
+			$dao->excluir($credito);
 
 			header("location:../index.php?pag=credito&msg=2");
 			exit();
 
 		case 'update':
 			$id = $_GET['id'];
-			$date_u = date("Y-m-d H:i:s");
 
-			$carteira = new Contas();
+			$id_conta = $_POST['id_conta'];
+			$id_centro_custos = $_POST['id_centro_custos'];
+			$tipo_mov = $_POST['tipo_mov'];
+			$data = $_POST['data'];
+			$descricao = $_POST['descricao'];
+			$valor = $_POST['valor'];
 
-			$carteira->setNome($name);
-			$carteira->setId($id);
-			$carteira->setDateUpdate($date_u);
+			$debito = new Movimentacao();
 
-			$dao->atualizar($carteira);
+			$debito->setId($id);
+			$debito->setId_conta($id_conta);
+			$debito->setId_centro_custos($id_centro_custos); 
+			$debito->setTipo_mov($tipo_mov);
+			$debito->setData($data);
+			$debito->setDescricao($descricao);
+			$debito->setValor($valor);
 
-			header("location:../index.php?pag=carteira&msg=3");
+			$dao->atualizar($debito);
+
+			header("location:../index.php?pag=credito&msg=3");
 			exit();
 		break;
+
+		case 'select':
+			$id_conta = $_POST['id_conta'];
+			$tipo_mov = $_POST['tipo_mov'];
+
+			echo $id_conta;
+			exit;
+
+			$credito = new Movimentacao();
+
+			$credito->setId_conta($id_conta);
+			$credito->setTipo_mov($tipo_mov);
+
+			$creditos = $dao->listarDeUmaCarteira($credito);
+
+			var_dump($creditos);
+			exit;
+
+			// header('Content-Type: application/json');
+			// echo json_encode($creditos);
+			// exit;
 		
 		default:
 			echo "Erro na condicao";

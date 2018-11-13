@@ -4,36 +4,43 @@
     {
         private $dir;
     	private $filename;
+        private $file;
 
     	public function Arquivo(){
             $this->filename = 'log.txt';
+            $this->dir = 'C:/xampp/htdocs/ULBRA/web2/agenda/';
 
-            if (file_exists($filename)) {
-                echo "O arquivo $filename existe";
-            } else {
-                echo "O arquivo $filename não existe";
+    	}
+
+        public function fecharArquivo(){
+            $this->escreverNoArquivo(PHP_EOL);
+            fclose($this->file);
+        }
+
+        public function abrirArquivo($mode){
+            switch ($mode) {
+                case 'a+':
+                    $this->file = fopen($this->dir . $this->filename, 'a+');
+                    break;
+                
+                default:
+                    echo 'incorreto';
+                    break;
             }
-
-    	}
-
-        public function setFilename($filename)
-        {
-            $this->filename = $filename;
+            
         }
 
-        public function getFilename()
-        {
-            return $this->filename;
+        public function escreverNoArquivo($msg){
+            fwrite($this->file, $msg);
         }
 
-    	public function setNome($nome)
-    	{
-    		$this->nome = $nome;
-    	}
-
-    	public function getNome()
-    	{
-    		return $this->nome;
-    	}
+        public function existeArquivo(){
+            if (file_exists($this->dir . $this->filename)) {
+               return true;
+            } else {
+                return false;
+            }
+        }
+        
     }
 ?>

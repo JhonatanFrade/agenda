@@ -129,7 +129,7 @@
   </div>
   <br>
   <div class="form-group col-md-6">
-    <button type="submit" class="btn btn-primary">Adicionar</button>
+    <button type="submit" class="btn btn-primary">Editar</button>
   </div>
   <input type="hidden" name="tipo_mov" value="2" /> <!--tipo_mov = 2  para Débito-->
 </form>
