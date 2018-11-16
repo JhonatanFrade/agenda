@@ -20,7 +20,48 @@ $(document).ready(function () {
 		});
 
 	});
+	$(document).ready(function () {
+/*
+	$(".selectContaListagem").on('change', function() {
+		var value = $(this).val();
+		console.log(value);
 
+		$.ajax({
+			url: "http://localhost/ULBRA/web2/agenda/php/acao.credito.php",
+			type: "POST",
+			data: "action=select&id_conta="+value+"&tipo_mov=1",
+			dataType: "html",
+			success: function(creditos){
+				//console.log(data);
+				//console.log("data ="+data );
+				//var retorno = data;
+
+				$("#listaConta").json(creditos);
+
+
+				//retornTeste(retorno);
+
+
+				//console.log(retorno);
+
+
+				
+				//success: function(html) { $("#tableContainer").html(html); 
+
+				//success: function(data){
+				//console.log(data);
+				
+			}
+		}).fail(function(jqXHR, textStatus ) {
+		    console.log("Request failed: " + textStatus);
+
+		}).always(function() {
+		    console.log("completou");
+		});
+
+		//return retorno;
+	});
+*/
 	$('#dinheiro').mask('#.##0,00', {reverse: true});
 
 	//Quando clicar no botão editar da Conta
