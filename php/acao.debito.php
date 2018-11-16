@@ -26,6 +26,10 @@
 			$descricao = $_POST['descricao'];
 			$valorOld = $_POST['valor'];
 
+			/*
+			Replace:
+			Esta função retorna uma string ou um array com todas as ocorrências de search em subject substituídas com o valor dado para replace
+			*/
 			$valorNew = str_replace('.','', $valorOld);
 			$valorNew = str_replace(',','.', $valorNew);
 
@@ -89,7 +93,13 @@
 			header("location:../index.php?pag=debito&msg=3");
 			exit();
 		break;
-		
+
+		case 'select':
+			$id_conta2 = $_POST['id_conta2'];
+			
+			header("location:../index.php?pag=debito&conta=".$id_conta2);
+	    break;
+
 		default:
 			echo "Erro na condicao";
 		break;
