@@ -80,8 +80,10 @@ class MovimentacaoDAO{
 		1 - para Crédito
 		2 - para Débito
 	*/
-	public function listar($tipoDeListagem)
+	public function listar($tipoList)
 	{
+		$tipoDeListagem = $tipoList->getTipo_mov();
+		
 		$dba = $this->dba;
 
 		$vet = array();
