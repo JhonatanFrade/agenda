@@ -85,27 +85,32 @@
 			header("location:../index.php?pag=credito&msg=3");
 			exit();
 		break;
-
+		
 		case 'select':
-			$id_conta = $_POST['id_conta'];
-			$tipo_mov = $_POST['tipo_mov'];
+			$id_conta2 = $_POST['id_conta2'];
+			//$tipo_mov = $_POST['tipo_mov'];
 
-			echo $id_conta;
-			exit;
+			//echo $id_conta2;
+			//exit;
 
-			$credito = new Movimentacao();
+			//$credito = new Movimentacao();
 
-			$credito->setId_conta($id_conta);
-			$credito->setTipo_mov($tipo_mov);
+			//$credito->setId_conta($id_conta2);
 
-			$creditos = $dao->listarDeUmaCarteira($credito);
+			//$credito->setTipo_mov($tipo_mov);
 
-			var_dump($creditos);
-			exit;
+			//$creditos = $dao->listarDeUmaCarteira($credito);
+			
+			/*
+			//var_dump($creditos);
+			//exit;
 
-			// header('Content-Type: application/json');
-			// echo json_encode($creditos);
-			// exit;
+			 header('Content-Type: application/json'); // para formatar corretamente os acentos para o formato json
+			 echo json_encode($creditos); // Tranforma o array que está no formato php para o formato json
+			 //exit;
+			 */
+			 header("location:../index.php?pag=credito&conta=".$id_conta2);
+	    break;
 		
 		default:
 			echo "Erro na condicao";
