@@ -1,3 +1,4 @@
+
 <?php 
   /*
   Leonardo modificou este trecho dia 07/11/2018
@@ -91,31 +92,38 @@
   <input type="hidden" name="tipo_mov" value="2" /> <!--tipo_mov = 2  para Débito-->
 </form>
 
-<br><br><br><br>
+<br><br><br>
 
 <!-- **************************************CONTROLE DA LISTAGEM POR NOME DAS CONTAS******* -->
-<!--
-  A LÓGICA DEVE FUNCIONAR PARECIDO COM ISSO :
-Quando acessada a página o dropdown começa vazio portanto na tabela não é listado nada porém 
-quando o usuário seleciona uma carteira a tabala é atualizada com os registros correspondentes 
-aquela conta, a listagem também é apresentada quando o usuário inseri o formulário na base de
-dados, por exemplo é nserido um formulário no qual o campo o nome da carteira é selecionado como x,
-quando armazenado e executado o redirecionamento para a página é enviado a esta pagina(arquivo exe.___.php)
-o nome x e colocado dentro de uma condição para listar somente os registros correspondentes a este nome. -->
-<div class="dropdown col-md-4">
-  <label>Carteiras</label>
-  <select name="id_conta" class="form-control">
-    <?php 
-        $carteiras = $CarteirasDAO->listar();
-      foreach ($carteiras as $key => $obj) {
-        $id = $obj->getId();
-        $name = $obj->getNome();
-      ?>
-    <option value="<?php echo $id ?>"><?php echo $name ?></option>
-    <?php } ?>
-  </select>
-</div>
-<br>
+
+<!--  Formulário número 2-->
+<form name = "form2" action="php/acao.debito.php?action=select" method="POST">
+  <div class="dropdown col-md-4">
+    <label>Carteiras</label>
+    <select name="id_conta2" class="form-control"> 
+    <!-- <select name="id_conta" class="form-control selectContaListagem"> -->
+      <!--Quando selecionado a opção a id da conta é mandada para o js, para o evento change
+      que por sua vez manda a id_conta e o tipo de movimentação para o arquivo acao.debito.php  -->
+      <?php 
+          $carteiras = $CarteirasDAO->listar();
+        foreach ($carteiras as $key => $obj) {
+          $id = $obj->getId();
+          $name = $obj->getNome();
+        ?>
+      <option value="<?php echo $id ?>"><?php echo $name ?></option>
+      <?php } ?>
+    </select>
+    <small class="form-text text-muted">Selecione a carteira dejeda e clique em filtrar
+    para que seja realizada a filtragem na tabela</small>
+  </div>
+  <br>
+  <div class="form-group col-md-6">
+    <button type="submit" class="btn btn-primary">Filtrar</button>
+  </div>
+</form>
+
+  <br>
+
 <!-- ******************************************************************************************************* -->
 
 
@@ -136,15 +144,29 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
     <tbody>
       <?php 
         //************************ACIONA O MÉTODO LISTAR********************************************
-        //$debitos = $MovimentacaoDAO->listarDebitos(); // AQUI LISTAR SOMENTE DÉBITOS!!
-        $tipoDeListagem = 2;
+         if (isset($_GET['conta']) and !empty($_GET['conta'])){
 
-        $debitos = $MovimentacaoDAO->listar($tipoDeListagem);
-        //******************************************************************************************
-        if(!empty($debitos)){
+          $debito_selec = $_GET['conta'];
+
+          $tipoDeListagem = 2;
+
+          //************************************************************
+
+          $tipoList = new Movimentacao();
+
+          $tipoList ->setTipo_mov($tipoDeListagem);
+
+          $debitos  = $MovimentacaoDAO->listar($tipoList);
+
+          //$debitos = $MovimentacaoDAO->listar($tipoDeListagem);
+
           foreach ($debitos as $key => $obj) {
+
+          $id = $obj->getId_conta();
+          $tipo = $obj->getTipo_mov();
+
+          if (($id == $debito_selec) && ($tipo == $tipoDeListagem)){
           $data = $obj->getData();
-          //$descricao_debito = $obj->getDescricao(); // Recebe a descrição do tipo de movimentação/TIREI
           //*******************APRESENTAR CENTRO DE CUSTO NA TABELA******************************
           $id_centro_custos = $obj->getId_centro_custos();
           $centro_custos = new CentroDeCustos(); // 
@@ -162,8 +184,7 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
         <td><?php echo $data;?></td>
         <td><?php echo $descricao_centro_custos;?></td>
         <td><?php echo 'R$' . number_format($valor, 2, ',', '.');?></td>
-        <!-- ********************************BOTÕES DE EDITAR E EXCLUIR/INCOMPLETO****************************************** -->
-        
+
         <td>
           <a href="index.php?pag=debito.edit&id=<?php echo $id_debito; ?>">
             <i class="fa fa-pencil-alt"></i>
@@ -176,7 +197,8 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
         <!--****************************************************************************************************  -->
       </tr>
       <?php } ?>
-      <?php }else{ ?>
+      <?php }
+      }else{ ?>
          <td><?php echo 'Sem registro!';?></td>
         <?php } ?>
     </tbody>
