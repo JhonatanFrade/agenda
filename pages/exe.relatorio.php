@@ -1,36 +1,60 @@
 <!-- Responsável Leonardo de Oliveira Meirelles -->
 
+<?php 
+
+	require_once("Contas/class.Contas.php");
+	require_once("Contas/class.ContasDAO.php");
+
+	 $CarteirasDAO = new ContasDAO();
+
+?>
+
+<style type="text/css">
+	.camp{
+		margin-bottom: 45px;
+	}
+</style>
+
 <h1 style="color: white;">Relatórios</h1>
 
-<div class="dropdown col-md-2">
-	<label for="exampleInputEmail1">Carteira</label>
-	<select class="form-control">
-		<option></option>
-		<option>Carteira 1</option>
-		<option>Carteira 2</option>
-	</select>
-</div>
+<form action="php/acao.relatorio.php?action=relatorio" method="post">
 
-<div class="dropdown col-md-2">
-	<label for="exampleInputEmail1">Tipo</label>
-	<select class="form-control">
-		<option></option>
-		<option>Débito</option>
-		<option>Crédito</option>
-	</select>
-</div>
+	<div class="camp dropdown col-md-2">
+		<label>Tipo de relatorio</label>
+		<input type="radio" name="tipo_rel" value="1"> Geral<br>
+		<input type="radio" name="tipo_rel" value="2"> Extrato<br>
 
-
- <div class="form-group col-md-4">
-	<label >Data de início</label>
-	<input type="date" name="bday" max="3000-12-31" 
-	    min="1000-01-01" class="form-control">
 	</div>
 
-	<div class="form-group col-md-4">
-	<label >Data do fim</label>
-	<input type="date" name="bday" max="3000-12-31" 
-	    min="1000-01-01" class="form-control">
+	<div class="camp dropdown col-md-4">
+	  	<label>Carteiras</label>
+	  	<select name="id_conta" class="form-control">
+	      <?php 
+	          $carteiras = $CarteirasDAO->listar();
+	        foreach ($carteiras as $key => $obj) {
+	          $id = $obj->getId();
+	          $name = $obj->getNome();
+	        ?>
+	  		<option value="<?php echo $id ?>"><?php echo $name ?></option>
+	      <?php } ?>
+	  	</select>
+	    <small class="form-text text-muted">informe a carteira.</small>
+	  </div>
+
+	<div class="camp dropdown col-md-4">
+		<label for="exampleInputEmail1">Tipo</label>
+		<select name="tipo_mov" class="form-control">
+			<option></option>
+			<option value="2">Débito</option>
+			<option value="1">Crédito</option>
+		</select>
 	</div>
 
-<button type="button" class="btn btn-primary">Imprimir Relatorio</button>
+
+	<div class="camp form-group col-md-4">
+		<label >Selecione o mês</label>
+		<input type="month" name="bday" max="3000-12" min="2018-01" class="form-control">
+	</div>
+
+	<button type="submit" class="btn btn-primary">Imprimir Relatorio</button>
+</form>

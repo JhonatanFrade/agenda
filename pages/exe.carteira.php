@@ -70,9 +70,9 @@
 	      		<input type="hidden" value="<?php echo $name; ?>">
 	      		<i class="fa fa-pencil-alt"></i>
 	      	</button>
-	      	<button style="margin-left: 20px;" onclick="location.href='php/acao.carteira.php?action=delete&id=<?php echo $id; ?>'">
+	      	<!-- <button disabled style="margin-left: 20px;" onclick="location.href='php/acao.carteira.php?action=delete&id=<?php// echo $id; ?>'">
 	      		<i class="fa fa-trash"></i>
-	      	</button>
+	      	</button> -->
 		  </td>
 	    </tr>
 	    <?php } ?>

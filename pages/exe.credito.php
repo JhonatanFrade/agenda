@@ -24,6 +24,8 @@
 <br>
 
 <form action="php/acao.credito.php?action=insert" method="POST">
+
+
   <div class="dropdown col-md-4">
   	<label>Carteiras</label>
   	<select name="id_conta" class="form-control">
@@ -38,6 +40,8 @@
   	</select>
     <small class="form-text text-muted">informe a carteira.</small>
   </div>
+
+
   <br>
   <div class="dropdown col-md-4">
     <label>Centro de custos</label>

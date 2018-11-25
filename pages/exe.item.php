@@ -70,7 +70,7 @@
 	      		<input type="hidden" value="<?php echo $descricao; ?>">
 	      		<i class="fa fa-pencil-alt"></i>
 	      	</button>
-	      	<button style="margin-left: 20px;" onclick="location.href='php/acao.item.php?action=delete&id=<?php echo $id; ?>'">
+	      	<button disabled style="margin-left: 20px;" onclick="location.href='php/acao.item.php?action=delete&id=<?php echo $id; ?>'">
 	      		<i class="fa fa-trash"></i>
 	      	</button>
 		  </td>

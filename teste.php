@@ -18,4 +18,6 @@ fclose($fo);
 
 // [date] - date - R$ valor
 
+//  1 - Crédito , 2 - Débito / O campo ná tabela tá como int
+
 ?>
