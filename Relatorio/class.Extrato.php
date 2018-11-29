@@ -1,10 +1,11 @@
 <?php
-   // Leonardo desenvolveu está classe.
+   // Jhonatan desenvolveu essa classe.
     class Extrato
     {
         private $id;
     	private $data;
         private $centro_custo;
+        private $tipo_mov;
         private $valor;
 
     	public function Extrato()
@@ -40,6 +41,16 @@
         public function getCentroDecusto()
         {
             return $this->centro_custo;
+        }
+
+        public function setTipoMov($tipo_mov)
+        {
+            $this->tipo_mov = $tipo_mov;
+        }
+
+        public function getTipoMov()
+        {
+            return $this->tipo_mov;
         }
 
         public function setValor($valor)

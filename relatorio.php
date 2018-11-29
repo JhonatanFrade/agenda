@@ -60,21 +60,84 @@
 
 		break;
 
-		//Tipo extrato
+		//Tipo extrato - Desenvolvido pelo jhonatan
 		case '2':
 
 			$id_conta = $_POST['id_conta'];
 			$tipo_mov = $_POST['tipo_mov'];
 			$bday = $_POST['bday'];
 
-			$sql = 'SELECT m.id, DATE_FORMAT(m.data, "%d-%m-%Y") as data_m, 
+			$sql = 'SELECT nome FROM contas WHERE id = "' . $id_conta . '"';
+
+			$res = $dba->query($sql);
+
+			$nome_conta = $dba->result($res, 0, 'nome');
+
+			$sql = 'SELECT data FROM movimentacao ORDER BY data LIMIT 1';
+
+			$res = $dba->query($sql);
+
+			$data_inicio = $dba->result($res, 0, 'data');
+
+			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
+
+			$res = $dba->query($sql);
+
+			$valor_total_credito = $dba->result($res, 0, 'valor_total');
+
+			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
+
+			$res = $dba->query($sql);
+
+			$valor_total_debito = $dba->result($res, 0, 'valor_total');
+
+			$saldo_anterior = $valor_total_credito - $valor_total_debito;
+
+			
+
+			// echo $valor_total_credito . '<br><br>' . $valor_total_debito;
+			// exit;
+
+			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
+
+			$res = $dba->query($sql);
+
+			$valor_atual_credito = $dba->result($res, 0, 'valor_total');
+
+			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
+
+			$res = $dba->query($sql);
+
+			$valor_atual_debito = $dba->result($res, 0, 'valor_total');
+
+			$saldo_atual = $valor_atual_credito - $valor_atual_debito;
+
+			// echo $saldo_atual;
+			// exit;
+
+			$saldo_atual = -abs($saldo_anterior) - -abs($saldo_atual);
+
+
+
+
+			$saldo_atual = str_replace('.',',', $saldo_atual);
+
+			$saldo_atual = 'R$ '. $saldo_atual;
+
+			$saldo_anterior = str_replace('.',',', $saldo_anterior);
+
+			$saldo_anterior = 'R$ '. $saldo_anterior;
+
+
+
+
+			$sql = 'SELECT m.id, m.tipo_mov, DATE_FORMAT(m.data, "%d-%m-%Y") as data_m, 
 						cc.nome as centro_custo, m.valor
 					FROM movimentacao as m
 					INNER JOIN centro_custos as cc ON (m.id_centro_custos = cc.id)
-					WHERE m.tipo_mov = "' . $tipo_mov . '"' .
-					' AND m.id_conta = "' . $id_conta . '"' .
+					WHERE m.id_conta = "' . $id_conta . '"' .
 					' AND DATE_FORMAT(m.data, "%Y-%m") = "' . $bday . '"' .
-					' ORDER BY m.id';
+					' ORDER BY data_m';
 
 			// echo $sql;
 			// exit;
@@ -90,12 +153,14 @@
 				$data = $dba->result($res, $i, 'data_m');
 				$centro_custo = $dba->result($res, $i, 'centro_custo');
 				$valor =  $dba->result($res, $i, 'valor');
+				$tipo_mov =  $dba->result($res, $i, 'tipo_mov');
 
 				$extrato = new Extrato();
 
 				$extrato->setId($id);
 				$extrato->setData($data);
 				$extrato->setCentroDecusto($centro_custo);
+				$extrato->setTipoMov($tipo_mov);
 				$extrato->setValor($valor);
 
 				$vet_extrato[] = $extrato;
@@ -148,9 +213,11 @@
 									$id = $obj->getId();
 									$nome_da_carteira = $obj->getNomeDaCarteira();
 									$nome_do_centro_custo = $obj->getNomeDoCentroDecusto();
-									$total_valor = $obj->getValorTotal();
+									$total_valor = 'R$ ' . $obj->getValorTotal();
+									$total_valor = 'R$ ' . $obj->getValorTotal();
+									$total_valor = str_replace('.',',', $total_valor);
 							  ?>
-					    <tr scope="row">
+					    <tr>
 					      <td><?php echo $nome_da_carteira; ?></td>
 					      <td><?php echo $nome_do_centro_custo; ?></td>
 					      <td><?php echo $total_valor; ?></td>
@@ -164,16 +231,18 @@
 	<?php } ?>		
 	
 
+	<!-- Jhonatan desenvolveu essa código -->
 	<?php if(isset($vet_extrato) && !empty($vet_extrato)){ ?>
 		<div class="container" style="margin-top: 50px;">
 			<div class="row">
-				<div id="tableExtrato" class="col-md-6">
-				<h1 style="color: white;">Extrato</h1>	
+				<div id="tableExtrato" class="col-md-8">
+				<h1 style="color: white;">Extrato da conta <?php echo $nome_conta ?></h1>	
 					<table class="table">
 					  <thead class="thead-dark">
 					    <tr>
-					      <th scope="col">data</th>
+					      <th scope="col">Data</th>
 					      <th scope="col">Centro de custo</th>
+					      <th scope="col">Tipo movimentacao</th>
 					      <th scope="col">Valor</th>
 					    </tr>
 					  </thead>
@@ -183,14 +252,38 @@
 								$id = $obj->getId();
 								$data = $obj->getData();
 								$centro_custo = $obj->getCentroDecusto();
-								$valor = $obj->getValor();
+								$tipo_mov = $obj->getTipoMov();
+								$valor = 'R$ ' . $obj->getValor();
+								$valor = str_replace('.',',', $valor);
 						  ?>
 					    <tr scope="row">
 					      <td><?php echo $data; ?></td>
 					      <td><?php echo $centro_custo; ?></td>
+					      <td>
+					      	<?php if($tipo_mov == '1'){
+						      	echo 'Crédito';
+						    }else{
+						      	echo 'Débito';
+						    } ?>
+					      </td>
 					      <td><?php echo $valor; ?></td>
 					    </tr>
 					    <?php } ?>
+					    <tr>
+					    	<td colspan="4"></td>
+					    </tr>
+					    <tr>
+					    	<td>SALDO ANTERIOR</td>
+					    	<td colspan="3" style="text-align: end; padding-right: 100px;">
+					    		<?php echo $saldo_anterior; ?>
+					    	</td>
+					    </tr>
+					    <tr>
+					    	<td>SALDO ATUAL</td>
+					    	<td colspan="3" style="text-align: end; padding-right: 100px;">
+					    		<?php echo $saldo_atual; ?>
+					    	</td>
+					    </tr>
 					  </tbody>
 					</table>
 				</div>
