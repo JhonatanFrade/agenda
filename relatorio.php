@@ -74,24 +74,28 @@
 				$tipo_mov = $_POST['tipo_mov'];
 				$bday = $_POST['bday'];
 
+				//pegando o nome da conta
 				$sql = 'SELECT nome FROM contas WHERE id = "' . $id_conta . '"';
 
 				$res = $dba->query($sql);
 
 				$nome_conta = $dba->result($res, 0, 'nome');
 
+				//pegando a data mais antiga dos movimentos
 				$sql = 'SELECT data FROM movimentacao ORDER BY data LIMIT 1';
 
 				$res = $dba->query($sql);
 
 				$data_inicio = $dba->result($res, 0, 'data');
 
+				//pegando o total de créditos dos meses anteriores
 				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
 
 				$res = $dba->query($sql);
 
 				$valor_total_credito = $dba->result($res, 0, 'valor_total');
 
+				//pegando o total de débitos dos meses anteriores
 				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
 
 				$res = $dba->query($sql);
@@ -100,17 +104,15 @@
 
 				$saldo_anterior = $valor_total_credito - $valor_total_debito;
 
-				
 
-				// echo $valor_total_credito . '<br><br>' . $valor_total_debito;
-				// exit;
-
+				//pegando o total de créditos do mes atual
 				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
 
 				$res = $dba->query($sql);
 
 				$valor_atual_credito = $dba->result($res, 0, 'valor_total');
 
+				//pegando o total de débitos do mes atual
 				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
 
 				$res = $dba->query($sql);
@@ -194,6 +196,7 @@
   		VOLTAR
   	</button>
 	
+	<!-- Leonardo desenvolveu essa código -->
 	<?php if(isset($vet_relatorio) && !empty($vet_relatorio)){ ?>
 		<div class="container" style="margin-top: 50px;">
 			<div class="row">
