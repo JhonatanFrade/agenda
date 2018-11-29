@@ -216,9 +216,7 @@
 									$id = $obj->getId();
 									$nome_da_carteira = $obj->getNomeDaCarteira();
 									$nome_do_centro_custo = $obj->getNomeDoCentroDecusto();
-									$total_valor = 'R$ ' . $obj->getValorTotal();
-									$total_valor = 'R$ ' . $obj->getValorTotal();
-									$total_valor = str_replace('.',',', $total_valor);
+									$total_valor = 'R$ '. number_format($obj->getValorTotal(), 2, ',', '.');
 							  ?>
 					    <tr>
 					      <td><?php echo $nome_da_carteira; ?></td>
@@ -265,8 +263,7 @@
 								$data = $obj->getData();
 								$centro_custo = $obj->getCentroDecusto();
 								$tipo_mov = $obj->getTipoMov();
-								$valor = 'R$ ' . $obj->getValor();
-								$valor = str_replace('.',',', $valor);
+								$valor = 'R$ '. number_format($obj->getValor(), 2, ',', '.');
 						  ?>
 					    <tr scope="row">
 					      <td><?php echo $data; ?></td>
