@@ -128,69 +128,74 @@
     <title>Relatorio</title>
   </head>
   <body>
-		  
+	
 	<?php if(isset($vet_relatorio) && !empty($vet_relatorio)){ ?>
-
-	<h1 style="color: white;">Relatório</h1>
-	<div id="tableRelatorio" class="form-group col-md-12">
-		<table class="table table-striped">
-		  <thead>
-		    <tr>
-		      <th scope="col">Nome da carteira</th>
-		      <th scope="col">Nome do centro de custo</th>
-		      <th scope="col">Total do valor</th>
-		    </tr>
-		  </thead>
-		  	<tbody>
-		  	 	<?php
-				foreach ($vet_relatorio as $key => $obj) {
-					$id = $obj->getId();
-					$nome_da_carteira = $obj->getNomeDaCarteira();
-					$nome_do_centro_custo = $obj->getNomeDoCentroDecusto();
-					$total_valor = $obj->getValorTotal();
-			  ?>
-		    <tr>
-		      <td><?php echo $nome_da_carteira; ?></td>
-		      <td><?php echo $nome_do_centro_custo; ?></td>
-		      <td><?php echo $total_valor; ?></td>
-		    </tr>
-		    <?php } ?>
-		  </tbody>
-		</table>
-	</div>
-	<?php } ?>
-			
+		<div class="container" style="margin-top: 50px;">
+			<div class="row">
+				<div id="tableExtrato" class="col-md-6">
+				<h1 style="color: white;">Relatório</h1>	
+					<table class="table">
+					  <thead class="thead-dark">
+					    <tr>
+					      <th scope="col">Nome da carteira</th>
+					      <th scope="col">Nome do centro de custo</th>
+					      <th scope="col">Total do valor</th>
+					    </tr>
+					  </thead>
+					  	<tbody style="background-color: white;">
+					  	 	<?php
+								foreach ($vet_relatorio as $key => $obj) {
+									$id = $obj->getId();
+									$nome_da_carteira = $obj->getNomeDaCarteira();
+									$nome_do_centro_custo = $obj->getNomeDoCentroDecusto();
+									$total_valor = $obj->getValorTotal();
+							  ?>
+					    <tr scope="row">
+					      <td><?php echo $nome_da_carteira; ?></td>
+					      <td><?php echo $nome_do_centro_custo; ?></td>
+					      <td><?php echo $total_valor; ?></td>
+					    </tr>
+					    <?php } ?>
+					  </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	<?php } ?>		
 	
 
 	<?php if(isset($vet_extrato) && !empty($vet_extrato)){ ?>
-
-	<h1 style="color: white;">Extrato</h1>	
-	<div id="tableExtrato" class="form-group col-md-12">
-		<table class="table table-striped">
-		  <thead>
-		    <tr>
-		      <th scope="col">data</th>
-		      <th scope="col">Centro de custo</th>
-		      <th scope="col">Valor</th>
-		    </tr>
-		  </thead>
-		  	<tbody>
-		  	 	<?php
-				foreach ($vet_extrato as $key => $obj) {
-					$id = $obj->getId();
-					$data = $obj->getData();
-					$centro_custo = $obj->getCentroDecusto();
-					$valor = $obj->getValor();
-			  ?>
-		    <tr>
-		      <td><?php echo $data; ?></td>
-		      <td><?php echo $centro_custo; ?></td>
-		      <td><?php echo $valor; ?></td>
-		    </tr>
-		    <?php } ?>
-		  </tbody>
-		</table>
-	</div>
+		<div class="container" style="margin-top: 50px;">
+			<div class="row">
+				<div id="tableExtrato" class="col-md-6">
+				<h1 style="color: white;">Extrato</h1>	
+					<table class="table">
+					  <thead class="thead-dark">
+					    <tr>
+					      <th scope="col">data</th>
+					      <th scope="col">Centro de custo</th>
+					      <th scope="col">Valor</th>
+					    </tr>
+					  </thead>
+					  	<tbody style="background-color: white;">
+					  	 	<?php
+							foreach ($vet_extrato as $key => $obj) {
+								$id = $obj->getId();
+								$data = $obj->getData();
+								$centro_custo = $obj->getCentroDecusto();
+								$valor = $obj->getValor();
+						  ?>
+					    <tr scope="row">
+					      <td><?php echo $data; ?></td>
+					      <td><?php echo $centro_custo; ?></td>
+					      <td><?php echo $valor; ?></td>
+					    </tr>
+					    <?php } ?>
+					  </tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	<?php } ?>
 			
 	<?php if(!isset($vet_extrato) && !isset($vet_relatorio)){ ?> 
