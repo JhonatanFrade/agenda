@@ -17,12 +17,12 @@
 
 <h1 style="color: white;">Relatórios</h1>
 
-<!-- <form action="php/acao.relatorio.php?action=relatorio" method="post"> -->
+<br>
 <form action="relatorio.php" method="post">
 
-	<div class="camp dropdown col-md-2">
-		<label>Tipo de relatorio</label>
-		<input type="radio" name="tipo_rel" value="1"> Geral<br>
+	<div class="camp dropdown col-md-4">
+		<label>Tipo de relatorio</label><br>
+		<input type="radio" name="tipo_rel" value="1"> Relatório dos centro de custos<br>
 		<input type="radio" name="tipo_rel" value="2"> Extrato<br>
 
 	</div>

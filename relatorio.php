@@ -7,171 +7,167 @@
 	// var_dump($_POST);
 	// exit;
 
-	$tipo_rel = $_POST['tipo_rel'];
+	if(isset($_POST['tipo_rel'])){
+		$tipo_rel = $_POST['tipo_rel'];
 
-	$dba = new DbAdmin('mysql');
+		$dba = new DbAdmin('mysql');
 
-	$dba->connect('localhost','root','','oc_agenda_web_2');
+		$dba->connect('localhost','root','','oc_agenda_web_2');
 
-	switch ($tipo_rel) {
+		switch ($tipo_rel) {
 
-		//Tipo relatorio
-		case '1':
+			//Tipo relatorio
+			case '1':
 
-			$id_conta = $_POST['id_conta'];
-			$tipo_mov = $_POST['tipo_mov'];
-			$bday = $_POST['bday'];
+				$id_conta = $_POST['id_conta'];
+				$tipo_mov = $_POST['tipo_mov'];
+				$bday = $_POST['bday'];
 
-			$sql = 'SELECT m.id, c.nome as nome_da_carteira, cc.nome as nome_do_centro_custo, 
-						sum(m.valor) as totalValor 
-					FROM movimentacao as m
-					INNER JOIN centro_custos as cc ON (m.id_centro_custos = cc.id)
-					INNER JOIN contas as c ON (c.id = m.id_conta)
-					WHERE m.tipo_mov = "' . $tipo_mov . '"' .
-					' AND m.id_conta = "' . $id_conta . '"' .
-					' AND DATE_FORMAT(m.data, "%Y-%m") = "' . $bday . '"' .
-					' GROUP BY m.id_centro_custos';
+				$sql = 'SELECT m.id, c.nome as nome_da_carteira, cc.nome as nome_do_centro_custo, 
+							sum(m.valor) as totalValor 
+						FROM movimentacao as m
+						INNER JOIN centro_custos as cc ON (m.id_centro_custos = cc.id)
+						INNER JOIN contas as c ON (c.id = m.id_conta)
+						WHERE m.tipo_mov = "' . $tipo_mov . '"' .
+						' AND m.id_conta = "' . $id_conta . '"' .
+						' AND DATE_FORMAT(m.data, "%Y-%m") = "' . $bday . '"' .
+						' GROUP BY m.id_centro_custos';
 
-			// echo $sql;
-			// exit;
+				// echo $sql;
+				// exit;
 
-			$res = $dba->query($sql);
+				$res = $dba->query($sql);
 
-			$num = $dba->rows($res);
+				$num = $dba->rows($res);
 
-			$result = array();
+				$result = array();
 
-			for ($i=0; $i < $num; $i++) { 
-				$id = $dba->result($res, $i, 'id');
-				$nome_da_carteira = $dba->result($res, $i, 'nome_da_carteira');
-				$nome_do_centro_custo = $dba->result($res, $i, 'nome_do_centro_custo');
-				$totalValor =  $dba->result($res, $i, 'totalValor');
+				$total_geral = 0;
 
-				$relatorio = new Relatorio();
+				for ($i=0; $i < $num; $i++) { 
+					$id = $dba->result($res, $i, 'id');
+					$nome_da_carteira = $dba->result($res, $i, 'nome_da_carteira');
+					$nome_do_centro_custo = $dba->result($res, $i, 'nome_do_centro_custo');
+					$totalValor =  $dba->result($res, $i, 'totalValor');
 
-				$relatorio->setId($id);
-				$relatorio->setNomeDaCarteira($nome_da_carteira);
-				$relatorio->setNomeDoCentroDecusto($nome_do_centro_custo);
-				$relatorio->setValorTotal($totalValor);
+					$relatorio = new Relatorio();
 
-				$vet_relatorio[] = $relatorio;
+					$relatorio->setId($id);
+					$relatorio->setNomeDaCarteira($nome_da_carteira);
+					$relatorio->setNomeDoCentroDecusto($nome_do_centro_custo);
+					$relatorio->setValorTotal($totalValor);
 
-			}
+					$total_geral += $totalValor;
 
-		break;
+					$vet_relatorio[] = $relatorio;
 
-		//Tipo extrato - Desenvolvido pelo jhonatan
-		case '2':
+				}
 
-			$id_conta = $_POST['id_conta'];
-			$tipo_mov = $_POST['tipo_mov'];
-			$bday = $_POST['bday'];
+				$total_geral = 'R$ '. number_format($total_geral, 2, ',', '.');
 
-			$sql = 'SELECT nome FROM contas WHERE id = "' . $id_conta . '"';
+			break;
 
-			$res = $dba->query($sql);
+			//Tipo extrato - Desenvolvido pelo jhonatan
+			case '2':
 
-			$nome_conta = $dba->result($res, 0, 'nome');
+				$id_conta = $_POST['id_conta'];
+				$tipo_mov = $_POST['tipo_mov'];
+				$bday = $_POST['bday'];
 
-			$sql = 'SELECT data FROM movimentacao ORDER BY data LIMIT 1';
+				$sql = 'SELECT nome FROM contas WHERE id = "' . $id_conta . '"';
 
-			$res = $dba->query($sql);
+				$res = $dba->query($sql);
 
-			$data_inicio = $dba->result($res, 0, 'data');
+				$nome_conta = $dba->result($res, 0, 'nome');
 
-			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
+				$sql = 'SELECT data FROM movimentacao ORDER BY data LIMIT 1';
 
-			$res = $dba->query($sql);
+				$res = $dba->query($sql);
 
-			$valor_total_credito = $dba->result($res, 0, 'valor_total');
+				$data_inicio = $dba->result($res, 0, 'data');
 
-			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
+				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
 
-			$res = $dba->query($sql);
+				$res = $dba->query($sql);
 
-			$valor_total_debito = $dba->result($res, 0, 'valor_total');
+				$valor_total_credito = $dba->result($res, 0, 'valor_total');
 
-			$saldo_anterior = $valor_total_credito - $valor_total_debito;
+				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE (data >= "' . $data_inicio . '" and data < "' . $bday . '-01' . '") AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
 
-			
+				$res = $dba->query($sql);
 
-			// echo $valor_total_credito . '<br><br>' . $valor_total_debito;
-			// exit;
+				$valor_total_debito = $dba->result($res, 0, 'valor_total');
 
-			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
+				$saldo_anterior = $valor_total_credito - $valor_total_debito;
 
-			$res = $dba->query($sql);
+				
 
-			$valor_atual_credito = $dba->result($res, 0, 'valor_total');
+				// echo $valor_total_credito . '<br><br>' . $valor_total_debito;
+				// exit;
 
-			$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
+				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "1" AND id_conta = "' . $id_conta . '"';
 
-			$res = $dba->query($sql);
+				$res = $dba->query($sql);
 
-			$valor_atual_debito = $dba->result($res, 0, 'valor_total');
+				$valor_atual_credito = $dba->result($res, 0, 'valor_total');
 
-			$saldo_atual = $valor_atual_credito - $valor_atual_debito;
+				$sql = 'SELECT sum(valor) as valor_total FROM movimentacao WHERE DATE_FORMAT(data, "%Y-%m") = "' . $bday . '" AND tipo_mov = "2" AND id_conta = "' . $id_conta . '"';
 
-			// echo $saldo_atual;
-			// exit;
+				$res = $dba->query($sql);
 
-			$saldo_atual = -abs($saldo_anterior) - -abs($saldo_atual);
+				$valor_atual_debito = $dba->result($res, 0, 'valor_total');
 
+				$saldo_atual = $valor_atual_credito - $valor_atual_debito;
 
+				$saldo_atual = $saldo_anterior + $saldo_atual;
 
+				$saldo_atual = 'R$ '. number_format($saldo_atual, 2, ',', '.');
 
-			$saldo_atual = str_replace('.',',', $saldo_atual);
+				$saldo_anterior = 'R$ '. number_format($saldo_anterior, 2, ',', '.');
 
-			$saldo_atual = 'R$ '. $saldo_atual;
 
-			$saldo_anterior = str_replace('.',',', $saldo_anterior);
+				$sql = 'SELECT m.id, m.tipo_mov, DATE_FORMAT(m.data, "%d-%m-%Y") as data_m, 
+							cc.nome as centro_custo, m.valor
+						FROM movimentacao as m
+						INNER JOIN centro_custos as cc ON (m.id_centro_custos = cc.id)
+						WHERE m.id_conta = "' . $id_conta . '"' .
+						' AND DATE_FORMAT(m.data, "%Y-%m") = "' . $bday . '"' .
+						' ORDER BY data_m';
 
-			$saldo_anterior = 'R$ '. $saldo_anterior;
+				// echo $sql;
+				// exit;
 
+				$res = $dba->query($sql);
 
+				$num = $dba->rows($res);
 
+				$result = array();
 
-			$sql = 'SELECT m.id, m.tipo_mov, DATE_FORMAT(m.data, "%d-%m-%Y") as data_m, 
-						cc.nome as centro_custo, m.valor
-					FROM movimentacao as m
-					INNER JOIN centro_custos as cc ON (m.id_centro_custos = cc.id)
-					WHERE m.id_conta = "' . $id_conta . '"' .
-					' AND DATE_FORMAT(m.data, "%Y-%m") = "' . $bday . '"' .
-					' ORDER BY data_m';
+				for ($i=0; $i < $num; $i++) { 
+					$id = $dba->result($res, $i, 'id');
+					$data = $dba->result($res, $i, 'data_m');
+					$centro_custo = $dba->result($res, $i, 'centro_custo');
+					$valor =  $dba->result($res, $i, 'valor');
+					$tipo_mov =  $dba->result($res, $i, 'tipo_mov');
 
-			// echo $sql;
-			// exit;
+					$extrato = new Extrato();
 
-			$res = $dba->query($sql);
+					$extrato->setId($id);
+					$extrato->setData($data);
+					$extrato->setCentroDecusto($centro_custo);
+					$extrato->setTipoMov($tipo_mov);
+					$extrato->setValor($valor);
 
-			$num = $dba->rows($res);
+					$vet_extrato[] = $extrato;
 
-			$result = array();
+				}
 
-			for ($i=0; $i < $num; $i++) { 
-				$id = $dba->result($res, $i, 'id');
-				$data = $dba->result($res, $i, 'data_m');
-				$centro_custo = $dba->result($res, $i, 'centro_custo');
-				$valor =  $dba->result($res, $i, 'valor');
-				$tipo_mov =  $dba->result($res, $i, 'tipo_mov');
+			break;
 
-				$extrato = new Extrato();
-
-				$extrato->setId($id);
-				$extrato->setData($data);
-				$extrato->setCentroDecusto($centro_custo);
-				$extrato->setTipoMov($tipo_mov);
-				$extrato->setValor($valor);
-
-				$vet_extrato[] = $extrato;
-
-			}
-
-		break;
-
-		default:
-			echo "Erro na condicao";
-		break;
+			default:
+				echo "Erro na condicao";
+			break;
+		}
 	}
 ?>
 <!doctype html>
@@ -193,11 +189,15 @@
     <title>Relatorio</title>
   </head>
   <body>
+
+  	<button class="btn btn-default" style="margin: 50px;" onclick="location.href='index.php?pag=relatorio'">
+  		VOLTAR
+  	</button>
 	
 	<?php if(isset($vet_relatorio) && !empty($vet_relatorio)){ ?>
 		<div class="container" style="margin-top: 50px;">
 			<div class="row">
-				<div id="tableExtrato" class="col-md-6">
+				<div id="tableExtrato" class="col-md-8">
 				<h1 style="color: white;">Relatório</h1>	
 					<table class="table">
 					  <thead class="thead-dark">
@@ -223,6 +223,15 @@
 					      <td><?php echo $total_valor; ?></td>
 					    </tr>
 					    <?php } ?>
+					    <tr>
+					    	<td colspan="3"></td>
+					    </tr>
+					    <tr>
+					    	<td>TOTAL GERAL</td>
+					    	<td colspan="2" style="text-align: end; padding-right: 100px;">
+					    		<?php echo $total_geral; ?>
+					    	</td>
+					    </tr>
 					  </tbody>
 					</table>
 				</div>
@@ -293,7 +302,7 @@
 			
 	<?php if(!isset($vet_extrato) && !isset($vet_relatorio)){ ?> 
 		<div>
-			<h1 style="color: white;">Sem dados!</h1>
+			<h1 style="color: white; margin: 100px;">Sem dados!</h1>
 		</div>
 	<?php } ?>
 
