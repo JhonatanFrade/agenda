@@ -17,7 +17,8 @@
 
 <h1 style="color: white;">Relatórios</h1>
 
-<form action="php/acao.relatorio.php?action=relatorio" method="post">
+<!-- <form action="php/acao.relatorio.php?action=relatorio" method="post"> -->
+<form action="relatorio.php" method="post">
 
 	<div class="camp dropdown col-md-2">
 		<label>Tipo de relatorio</label>
@@ -44,7 +45,6 @@
 	<div class="camp dropdown col-md-4">
 		<label for="exampleInputEmail1">Tipo</label>
 		<select name="tipo_mov" class="form-control">
-			<option></option>
 			<option value="2">Débito</option>
 			<option value="1">Crédito</option>
 		</select>
