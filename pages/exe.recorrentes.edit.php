@@ -34,7 +34,6 @@
           $valor_info = number_format($obj->getValor(), 2, ',', '.');
           $id_conta_info = $obj->getId_conta();
           $id_centro_custo_info = $obj->getId_centro_custos();
-          // nnnnnnnnnnnn
           $descricao_info = $obj->getDescricao();
           $id_info = $obj->getId();
     }
