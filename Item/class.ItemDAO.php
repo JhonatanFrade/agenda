@@ -1,5 +1,9 @@
 <?php
-// Leonardo desenvolveu está classe.
+/*
+	Leonardo desenvolveu está classe.
+
+	Dia 05/12/2018, Leonardo alterou o nome do método listarUmCliente para listarUmItem
+*/
 require_once('C:/xampp/htdocs/ULBRA/web2/agenda/DbAdmin/class.DbAdmin.php');
 
 class ItemDAO{
@@ -94,7 +98,7 @@ class ItemDAO{
 		return $vet;
 	}
 
-	public function listarUmCliente($obj){
+	public function listarUmItem($obj){
 		$dba = $this->dba;
 
 		$id = $obj->getId();
