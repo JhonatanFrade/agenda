@@ -1,5 +1,8 @@
 <?php
    // Jonhatan desenvolveu está classe.
+
+   // Dia 05/12/2018 Leonardo corrigiu alguns erros.
+
     class Parcelas
     {
         private $id;
@@ -29,12 +32,12 @@
 
     	public function setId_centro_custos($id_centro_custos)
     	{
-    		$this->$id_centro_custos=$$id_centro_custos;
+    		$this->id_centro_custos=$id_centro_custos;
     	}
 
     	public function getId_centro_custos()
     	{
-    		return $this->$id_centro_custos;
+    		return $this->id_centro_custos;
     	}
 
         //*****************************************
@@ -46,7 +49,7 @@
 
         public function getId_conta()
         {
-            return $this->$id_conta;
+            return $this->id_conta;
         }
 
 
@@ -57,7 +60,7 @@
 
         public function getId_item()
         {
-            return $this->$id_item;
+            return $this->id_item;
         }
 
          public function setTipo_mov($tipo_mov)
@@ -67,7 +70,7 @@
 
         public function getTipo_mov()
         {
-            return $this->$tipo_mov;
+            return $this->tipo_mov;
         }
         
         public function setParcela($parcela)
@@ -77,7 +80,7 @@
 
         public function getParcela()
         {
-            return $this->$parcela;
+            return $this->parcela;
         }
 
          
@@ -88,7 +91,7 @@
 
         public function getVencimento()
         {
-            return $this->$vencimento;
+            return $this->vencimento;
         }
 
         public function setValor($valor)
@@ -98,7 +101,7 @@
 
         public function getValor()
         {
-            return $this->$valor;
+            return $this->valor;
         }
 
         public function setStatus_pagamento($status_pagamento)
@@ -108,7 +111,7 @@
 
         public function getStatus_pagamento()
         {
-            return $this->$status_pagamento;
+            return $this->status_pagamento;
         }
 
     }

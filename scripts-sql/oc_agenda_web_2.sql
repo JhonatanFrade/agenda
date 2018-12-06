@@ -117,7 +117,7 @@ CREATE TABLE `parcelas` (
   `id_centro_custos` int(11) NOT NULL,
   `id_conta` int(11) NOT NULL,
   `id_item` int(11) NOT NULL,
-  `tipo_mov` varchar(10) NOT NULL,
+  `tipo_mov` int(11) NOT NULL, -- Dia 05/12/2018,Leonardo Modificou o tipo do campo de Varchar(10) para int(11)
   `parcela` varchar(10) NOT NULL,
   `vencimento` datetime NOT NULL,
   `valor` decimal(10,2) NOT NULL,
@@ -134,7 +134,7 @@ CREATE TABLE `recorrentes` (
   `id` int(11) NOT NULL,
   `id_centro_custos` int(11) NOT NULL,
   `id_conta` int(11) NOT NULL,
-  `tipo_mov` varchar(10) NOT NULL,
+  `tipo_mov` int(11) NOT NULL, -- Dia 05/12/2018,Leonardo Modificou o tipo do campo de Varchar(10) para int(11)
   `dia` int(11) NOT NULL,
   `descricao` varchar(100) NOT NULL,
   `valor` decimal(10,2) NOT NULL
