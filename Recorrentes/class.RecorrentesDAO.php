@@ -1,6 +1,6 @@
 <?php
 // Jonhatan desenvolveu está classe.
-require_once('class.DbAdmin.php');
+require_once('C:/xampp/htdocs/ULBRA/web2/agenda/DbAdmin/class.DbAdmin.php');
 
 class RecorrentesDAO{
 
@@ -10,17 +10,16 @@ class RecorrentesDAO{
 
 		$dba = new DbAdmin('mysql');
 
-		$dba->connect('localhost','root','','web2');
+		$dba->connect('localhost','root','','oc_agenda_web_2');
 
 		$this->dba = $dba;
 
 	}
 
-	public function cadastra($objeto){
+	public function cadastrar($objeto){
 
 		$dba = $this->dba;
 
-		$id = $objeto->getId();
 		$id_centro_custos = $objeto->getId_centro_custos();
 		$id_conta = $objeto->getId_conta();
 		$tipo_mov = $objeto->getTipo_mov();
@@ -29,9 +28,8 @@ class RecorrentesDAO{
 		$valor = $objeto->getValor();
 
 		$query = 'INSERT INTO recorrentes
-					(tipo_mov,dia,descricao,valor)
-				  VALUES ("'.$tipo_mov.'","'.$dia.'","'.$descricao.'","'.$valor.'")';
-				  // A id não será armazenada primária e secundaria não serão armazenadas.
+					(id_centro_custos, id_conta, tipo_mov, dia, descricao, valor)
+				  VALUES ("'.$id_centro_custos.'","'.$id_conta.'","'.$tipo_mov.'","'.$dia.'","'.$descricao.'","'.$valor.'")';
 		
 		$dba->query($query);
 		

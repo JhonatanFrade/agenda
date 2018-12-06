@@ -52,7 +52,7 @@
 
 
 	<div class="camp form-group col-md-4">
-		<label >Selecione o mês</label>
+		<label>Selecione o mês</label>
 		<input type="month" name="bday" max="3000-12" min="2018-01" class="form-control">
 	</div>
 

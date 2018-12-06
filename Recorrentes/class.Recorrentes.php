@@ -7,8 +7,8 @@
         private $id_conta;
         private $tipo_mov;
         private $dia;
+        private $descricao;
         private $valor;
-      
 
     	public function  Recorrentes()
     	{
@@ -27,7 +27,7 @@
 
     	public function setId_centro_custos($id_centro_custos)
     	{
-    		$this->$id_centro_custos=$$id_centro_custos;
+    		$this->$id_centro_custos=$id_centro_custos;
     	}
 
     	public function getId_centro_custos()
@@ -63,6 +63,16 @@
         public function getDia()
         {
             return $this->$dia;
+        }
+
+        public function setDescricao($descricao)
+        {
+            $this->descricao=$descricao;
+        }
+
+        public function getDescricao()
+        {
+            return $this->$descricao;
         }
 
         public function setValor($valor)
