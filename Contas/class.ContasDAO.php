@@ -1,5 +1,10 @@
 <?php
-// Jonhatan desenvolveu está classe.
+/*
+    Jonhatan desenvolveu está classe.
+
+	Dia 05/12/2018,realizado modificações
+	Leonado retirou a função listarCliente, pois não era utilizada em nenhum momento.
+*/
 require_once('C:/xampp/htdocs/ULBRA/web2/agenda/DbAdmin/class.DbAdmin.php');
 
 class ContasDAO{
@@ -70,39 +75,6 @@ class ContasDAO{
 
 		$query = 'SELECT *, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_criacao, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_alteracao
 				 FROM contas';
-
-		$res = $dba->query($query);
-
-		$num = $dba->rows($res);
-
-		for ($i=0; $i < $num; $i++) { 
-			$id = $dba->result($res, $i, 'id');
-			$name = $dba->result($res, $i, 'nome');
-			$date_c = $dba->result($res, $i, 'data_criacao');
-			$date_u = $dba->result($res, $i, 'data_alteracao');
-
-			$contas = new Contas();
-
-			$contas->setId($id);
-			$contas->setNome($name);
-			$contas->setDateCreate($date_c);
-			$contas->setDateUpdate($date_u);
-
-			$vet[] = $contas;
-
-		}
-
-		return $vet;
-	}
-
-	public function listarUmCliente($obj){
-		$dba = $this->dba;
-
-		$id = $obj->getId();
-
-		$query = 'SELECT *, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_criacao, DATE_FORMAT(date_create, "%d/%m/%Y %H:%i:%s") AS data_alteracao
-				 FROM contas
-				 WHERE id = '.$id;
 
 		$res = $dba->query($query);
 
