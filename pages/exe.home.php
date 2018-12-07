@@ -104,19 +104,14 @@
 			              $valor = $obj->getValor();
 			              $id_credito = $obj->getId();
 
-			                echo '<tr>';
+			             echo '<tr>';
 
-		                      echo '<td>"'.$data.'"</td>';
-		                      echo '<td>';
-		                         if ($tipo == 1) { echo "Credito";}
-		          	             if ($tipo == 2) { echo "Debito";}
+		                       echo '<td>'.$data.'</td>';
+		                       echo '<td>';
+		                          echo "Credito";
 		          	          echo '</td>';
-		          	          echo '<td> R$ "'. number_format($valor, 2, ',', '.').'"</td>';
-		          	        echo '</tr>';
-		          	    }
-		          	    else
-		          	    {
-		          	    	echo '<td> "Sem registro!"</td>';
+		          	          echo '<td> R$ '. number_format($valor, 2, ',', '.').'</td>';
+		          	      echo '</tr>';
 		          	    }
 		          	}
 
@@ -137,15 +132,14 @@
 			              $valor = $obj->getValor();
 			              $id_credito = $obj->getId();
 
-			                echo '<tr>';
+			              echo '<tr>';
 
-		                      echo '<td>"'.$data.'"</td>';
-		                      echo '<td>';
-		                         if ($tipo == 1) { echo "Credito";}
-		          	             if ($tipo == 2) { echo "Debito";}
+		                        echo '<td>'.$data.'</td>';
+		                        echo '<td>';
+		          	            echo "Debito";
 		          	          echo '</td>';
-		          	          echo '<td> R$ "'. number_format($valor, 2, ',', '.').'"</td>';
-		          	        echo '</tr>';
+		          	          echo '<td> R$ '. number_format($valor, 2, ',', '.').'</td>';
+		          	       echo '</tr>';
 		          	    }  
 		          	}
 		        }
