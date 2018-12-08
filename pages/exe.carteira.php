@@ -1,4 +1,8 @@
-<!-- Responsável Leonardo de Oliveira Meirelles -->
+<!--
+     - Arquivo criado pelo Leonardo dia 16/10.
+     - Modificado pelo jonhatan dia 23/10/2018 (Adicionado o Modal e a listagem)
+     - Modificado pelo jonhatan dia 24/11/2018 (Configuração do Relatório)
+-->
 
 <?php 
 
