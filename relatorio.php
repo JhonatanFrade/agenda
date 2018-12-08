@@ -1,11 +1,11 @@
 <?php
+        /*
+	    Dia 18/11/2018 Jonatham desenvolveu este arquivo.
+	*/
 	require_once('C:/xampp/htdocs/ULBRA/web2/agenda/DbAdmin/class.DbAdmin.php');
 
 	require_once("Relatorio/class.Relatorio.php");
 	require_once("Relatorio/class.Extrato.php");
-
-	// var_dump($_POST);
-	// exit;
 
 	if(isset($_POST['tipo_rel'])){
 		$tipo_rel = $_POST['tipo_rel'];
