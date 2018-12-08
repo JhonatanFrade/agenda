@@ -1,5 +1,5 @@
 <?php
-   // Jonhatan desenvolveu está classe.
+   // Dia 10/10/2018 Jonhatan desenvolveu está classe.
     class Movimentacao
     {
         private $id;
