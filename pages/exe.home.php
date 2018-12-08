@@ -21,6 +21,7 @@
   if (isset($_GET['total']) and !empty($_GET['total']))
   {
   	$total = $_GET['total'];
+	$total = number_format($total, 2, ',', '.');
   }
 
 ?>
