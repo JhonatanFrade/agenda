@@ -1,9 +1,13 @@
 <?php
-   // Leonardo desenvolveu está classe.
+   /* 
+       - Dia 10/10/2018 Leonardo desenvolveu está classe.
+       - Classe Modificada por Leonardo Dia 05/12/2018.
+   */
+   
     class Recorrentes
     {
         private $id;
-    	private $id_centro_custos;
+    	  private $id_centro_custos;
         private $id_conta;
         private $tipo_mov;
         private $dia;
