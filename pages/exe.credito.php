@@ -1,6 +1,12 @@
 <?php 
 
-  //Responsável: Jhonatan Frade
+/*
+  - Arquivo criado pelo Jonhatan dia 23/10/2018
+  - Modificado pelo Leonardo dia 17/11/2018 
+    - Alterado a listagem da tabela 
+    - Criado o filtro para a tabela, utilizando um segundo formulário.
+  - Modificado pelo jonhatan dia 24/11/2018 (Configuração do Relatório)
+*/
 
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
