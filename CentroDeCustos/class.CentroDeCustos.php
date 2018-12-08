@@ -1,5 +1,6 @@
 <?php
    // Dia 10/10/2018 Leonardo desenvolveu está classe.
+
     class CentroDeCustos
     {
         private $id;
