@@ -2,7 +2,7 @@
    /*
    Jhonatan Frade Criou este arquivo
    
-   Dia 05/12/2018 Leonardeo modificou 
+   Dia 05/12/2018 Leonardo modificou 
      - Adicionou o campos de status de pagamento
      - Editou os campos item e número de parcelas
      - Desenvolveu a listagem
