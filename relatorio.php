@@ -1,6 +1,6 @@
 <?php
         /*
-	    Dia 18/11/2018 Jonatham desenvolveu este arquivo.
+	    Dia 28/11/2018 Jonatham desenvolveu este arquivo.
 	*/
 	require_once('C:/xampp/htdocs/ULBRA/web2/agenda/DbAdmin/class.DbAdmin.php');
 
