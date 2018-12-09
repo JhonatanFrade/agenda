@@ -1,8 +1,8 @@
 <!--
-     - Arquivo criado pelo Jonhatan dia 16/10.
-     - Modificado pelo Jonhatan dia 23/10/2018 (Adicionado o Modal e a listagem)
-     - Modificado pelo Jonhatan dia 22/11/18 (Retirado o botão excluir da listagem)
-     - Modificado pelo Jonhatan dia 24/11/2018 (Configuração do Relatório)   
+     - Arquivo criado pelo Leonardo dia 16/10.
+     - Modificado pelo jonhatan dia 23/10/2018 (Adicionado o Modal e a listagem)
+     - Modificado pelo Jonhatam dia 22/11/18 (Retirado o botão excluir da listagem)
+     - Modificado pelo jonhatan dia 24/11/2018 (Configuração do Relatório)   
 -->
 
 <?php 
