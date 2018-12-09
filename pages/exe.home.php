@@ -1,5 +1,8 @@
 <?php 
-// Dia 06/12/2018  Leonardo alterou este arquivo.
+/*
+- Arquivo criado pelo Jonhatan dia 16/10.
+  Dia 06/12/2018  Leonardo alterou este arquivo.
+*/
 
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
@@ -21,6 +24,7 @@
   if (isset($_GET['total']) and !empty($_GET['total']))
   {
   	$total = $_GET['total'];
+	$total = number_format($total, 2, ',', '.');
   }
 
 ?>
@@ -104,19 +108,14 @@
 			              $valor = $obj->getValor();
 			              $id_credito = $obj->getId();
 
-			                echo '<tr>';
+			             echo '<tr>';
 
-		                      echo '<td>"'.$data.'"</td>';
-		                      echo '<td>';
-		                         if ($tipo == 1) { echo "Credito";}
-		          	             if ($tipo == 2) { echo "Debito";}
+		                       echo '<td>'.$data.'</td>';
+		                       echo '<td>';
+		                          echo "Credito";
 		          	          echo '</td>';
-		          	          echo '<td> R$ "'. number_format($valor, 2, ',', '.').'"</td>';
-		          	        echo '</tr>';
-		          	    }
-		          	    else
-		          	    {
-		          	    	echo '<td> "Sem registro!"</td>';
+		          	          echo '<td> R$ '. number_format($valor, 2, ',', '.').'</td>';
+		          	      echo '</tr>';
 		          	    }
 		          	}
 
@@ -137,15 +136,14 @@
 			              $valor = $obj->getValor();
 			              $id_credito = $obj->getId();
 
-			                echo '<tr>';
+			              echo '<tr>';
 
-		                      echo '<td>"'.$data.'"</td>';
-		                      echo '<td>';
-		                         if ($tipo == 1) { echo "Credito";}
-		          	             if ($tipo == 2) { echo "Debito";}
+		                        echo '<td>'.$data.'</td>';
+		                        echo '<td>';
+		          	            echo "Debito";
 		          	          echo '</td>';
-		          	          echo '<td> R$ "'. number_format($valor, 2, ',', '.').'"</td>';
-		          	        echo '</tr>';
+		          	          echo '<td> R$ '. number_format($valor, 2, ',', '.').'</td>';
+		          	       echo '</tr>';
 		          	    }  
 		          	}
 		        }

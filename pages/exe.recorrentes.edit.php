@@ -1,5 +1,7 @@
 <?php 
-
+  /*
+   Dia 05/12/2018 Leonardeo desenvolveu este arquivo
+  */
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
 

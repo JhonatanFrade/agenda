@@ -1,6 +1,6 @@
 <?php 
 
-  //Responsável: Jhonatan Frade
+  //Arquivo criado pelo Jonhatan dia 28 de Outubro
 
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");

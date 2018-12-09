@@ -1,5 +1,11 @@
 <?php 
-
+/*
+   Jhonatan Frade Criou este arquivo
+   
+   Dia 05/12/2018 Leonardo modificou 
+     - Adicionou o campo dia
+     - Desenvolveu a listagem
+*/
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
 

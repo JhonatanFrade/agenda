@@ -1,6 +1,12 @@
 <?php 
 
-  //Responsável: Jhonatan Frade
+/*
+  - Arquivo criado pelo Jonhatan dia 23/10/2018
+  - Modificado pelo Leonardo dia 17/11/2018 
+    - Alterado a listagem da tabela 
+    - Criado o filtro para a tabela, utilizando um segundo formulário.
+  - Modificado pelo jonhatan dia 24/11/2018 (Configuração do Relatório)
+*/
 
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
@@ -88,9 +94,6 @@
   <div class="dropdown col-md-4">
     <label>Carteiras</label>
     <select name="id_conta2" class="form-control"> 
-    <!-- <select name="id_conta" class="form-control selectContaListagem"> -->
-      <!--Quando selecionado a opção a id da conta é mandada para o js, para o evento change
-      que por sua vez manda a id_conta e o tipo de movimentação para o arquivo acao.credito.php  -->
       <?php 
           $carteiras = $CarteirasDAO->listar();
         foreach ($carteiras as $key => $obj) {
@@ -122,7 +125,6 @@
           <th scope="col">Ações</th>
         </tr>
       </thead>
-      <!-- <tbody id="listaConta"> -->
       <tbody>
         <?php 
 

@@ -1,5 +1,14 @@
 
 <?php 
+
+ /*
+     - Arquivo criado pelo Jonhatan dia 23/10/2018
+     - Modificado pelo Leonardo dia 17/11/2018 
+      - Alterado a listagem da tabela 
+      - Criado o filtro para a tabela, utilizando um segundo formulário.
+ */
+
+
   /*
   Leonardo modificou este trecho dia 07/11/2018
   ----------------------------------------------------------------------
@@ -32,7 +41,7 @@
 <h1 style="color: white;">Débitos</h1>
 
 <br>
-<!-- **************************************dropdown Nome das contas******************************************* -->
+<!-- *************************dropdown Nome das contas******************************************* -->
 <form action="php/acao.debito.php?action=insert" method="POST">
   <div class="dropdown col-md-4">
     <label>Carteiras</label>
@@ -48,9 +57,9 @@
     </select>
     <small class="form-text text-muted">informe a carteira.</small>
   </div>
-<!-- ******************************************************************************************************* -->
+<!-- ********************************************************************************************* -->
   <br>
-<!-- **************************************dropdown Nome dos Centros de custos****************************** -->
+<!-- ******************************dropdown Nome dos Centros de custos**************************** -->
   <div class="dropdown col-md-4">
     <label>Centro de custos</label>
     <select name="id_centro_custos" class="form-control">
@@ -101,9 +110,6 @@
   <div class="dropdown col-md-4">
     <label>Carteiras</label>
     <select name="id_conta2" class="form-control"> 
-    <!-- <select name="id_conta" class="form-control selectContaListagem"> -->
-      <!--Quando selecionado a opção a id da conta é mandada para o js, para o evento change
-      que por sua vez manda a id_conta e o tipo de movimentação para o arquivo acao.debito.php  -->
       <?php 
           $carteiras = $CarteirasDAO->listar();
         foreach ($carteiras as $key => $obj) {
@@ -124,10 +130,10 @@
 
   <br>
 
-<!-- ******************************************************************************************************* -->
+<!-- ********************************************************************************************* -->
 
 
-<!-- **********************************************LISTAGEM DOS DÉBITOS************************************ -->
+<!-- **********************************************LISTAGEM DOS DÉBITOS*************************** -->
 <!-- Modificado/Antes eu tinha colocado o col-md com 12 para ter espaço para colocar os botões
 Como por enquanto não estamos usando os botões deixei a tabela com o tamanho que estava antes.   -->
 <div class="form-group col-md-10"> 
@@ -157,8 +163,6 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
           $tipoList ->setTipo_mov($tipoDeListagem);
 
           $debitos  = $MovimentacaoDAO->listar($tipoList);
-
-          //$debitos = $MovimentacaoDAO->listar($tipoDeListagem);
 
           foreach ($debitos as $key => $obj) {
 
@@ -194,7 +198,7 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
           </a>
         </td>
         
-        <!--****************************************************************************************************  -->
+        <!--*************************************************************************************  -->
       </tr>
       <?php } ?>
       <?php }
@@ -204,4 +208,4 @@ Como por enquanto não estamos usando os botões deixei a tabela com o tamanho q
     </tbody>
   </table>
 </div>
-<!-- ******************************************************************************************************* -->
+<!-- ********************************************************************************************** -->
