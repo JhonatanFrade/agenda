@@ -1,5 +1,8 @@
 <?php 
-// Dia 06/12/2018  Leonardo alterou este arquivo.
+/*
+- Arquivo criado pelo Jonhatan dia 16/10.
+  Dia 06/12/2018  Leonardo alterou este arquivo.
+*/
 
   require_once("Contas/class.Contas.php");
   require_once("Contas/class.ContasDAO.php");
