@@ -1,5 +1,5 @@
 <?php
-   // Leonardo desenvolveu está classe.
+   // Dia 6/11/2018 Jonhatan desenvolveu está classe.
     class Arquivo
     {
         private $dir;
